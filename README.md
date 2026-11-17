@@ -1,4 +1,4 @@
-# GDX-Video
+# Arc-Video
 
 ![GitHub Workflow Status (master)](https://img.shields.io/github/actions/workflow/status/libgdx/gdx-video/publish_snapshot.yml?branch=master)
 
