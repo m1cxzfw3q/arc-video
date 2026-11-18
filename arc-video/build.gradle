@@ -21,10 +21,10 @@ sourceSets {
     }
 }
 
-archivesBaseName = 'gdx-video'
+archivesBaseName = 'arc-video'
 
 dependencies {
-    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    api "com.github.Anuken.Arc:arc-dore:$arcVersion"
 }
 
 eclipse.project {

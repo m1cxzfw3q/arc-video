@@ -27,13 +27,13 @@ configurations {
 }
 
 dependencies {
-    api project(":gdx-video-core")
+    api project(":arc-video-core")
 }
 
-apply plugin: "com.badlogicgames.gdx.gdx-jnigen"
+apply plugin: "com.badlogicgames.jnigen.jnigen-gradle"
 
 jnigen {
-    sharedLibName = "gdx-video-desktop"
+    sharedLibName = "arc-video-desktop"
     all {
         headerDirs = []
         cFlags += " -fvisibility=hidden "
@@ -50,17 +50,17 @@ jnigen {
         return [ "$outPath/include" ]
     }
 
-    add(Windows, x32) {
+    addWindows(x32, x86) {
         headerDirs += genHeaders("windows32")
         cppFlags += " -DWIN32 "
         libraries += genLibs("windows32") + " -lbcrypt -lws2_32"
     }
-    add(Windows, x64) {
+    addWindows(x64, x86) {
         headerDirs += genHeaders("windows64")
         cppFlags += " -DWIN32 "
         libraries += genLibs("windows64") + " -lbcrypt -lws2_32"
     }
-    add(Linux, x64) {
+    addLinux(x64, x86) {
         headerDirs += genHeaders("linux64")
         libraries += genLibs("linux64")
         if(os.name() != "Linux") {
@@ -68,24 +68,24 @@ jnigen {
         }
         linkerFlags += " -Wl,-Bsymbolic "
     }
-    add(Linux, x32, ARM) {
+    addLinux(x32, ARM) {
         headerDirs += genHeaders("linuxarm32")
         libraries += genLibs("linuxarm32")
         linkerFlags += " -Wl,-Bsymbolic "
     }
-    add(Linux, x64, ARM) {
+    addLinux(x64, ARM) {
         headerDirs += genHeaders("linuxarm64")
         libraries += genLibs("linuxarm64")
         linkerFlags += " -Wl,-Bsymbolic "
     }
-    add(MacOsX, x64) {
+    addMac(x64, x86) {
         headerDirs += genHeaders("macos64")
         libraries += genLibs("macos64") + " -liconv -lbz2 -lz -framework CoreFoundation -framework CoreVideo -framework CoreMedia -framework VideoToolbox"
         cFlags += " -mmacosx-version-min=10.11"
         cppFlags += " -mmacosx-version-min=10.11"
         linkerFlags += " -mmacosx-version-min=10.11"
     }
-    add(MacOsX, x64, ARM) {
+    addMac(x64, ARM) {
         headerDirs += genHeaders("macosarm64")
         libraries += genLibs("macosarm64") + " -liconv -lbz2 -lz -framework CoreFoundation -framework CoreVideo -framework CoreMedia -framework VideoToolbox"
         cFlags += " -mmacosx-version-min=10.11"

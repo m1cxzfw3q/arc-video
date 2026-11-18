@@ -7,7 +7,7 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    namespace = 'com.badlogic.gdx.video'
+    namespace = 'arc.video'
 
     compileSdkVersion = project.compileSdk
 
@@ -45,8 +45,8 @@ android {
 }
 
 dependencies {
-    api project(":gdx-video-core")
-    api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+    api project(":arc-video-core")
+    api "com.github.Anuken.Arc:backend-android:$arcVersion"
 }
 
 eclipse.project {
