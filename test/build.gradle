@@ -8,7 +8,7 @@ configure(subprojects - project(':test:android')) {
 
 subprojects {
 	version = '0.0.1-SNAPSHOT'
-	ext.appName = 'gdx-video-test'
+	ext.appName = 'arc-video-test'
 	repositories {
 		mavenLocal()
 		mavenCentral()
@@ -19,5 +19,5 @@ subprojects {
 }
 
 eclipse.project {
-    name = 'gdx-video-test'
+    name = 'arc-video-test'
 }

@@ -128,7 +128,7 @@ your game on real devices.
 #### Additional notes
 
 **Desktop:** Additional formats and codecs can be enabled when compiling 
-gdx-video yourself. See the file [gdx-video-desktop/FFmpeg/build.gradle](gdx-video-desktop/FFmpeg/build.gradle).
+gdx-video yourself. See the file [gdx-video-desktop/FFmpeg/build.gradle](arc-video-desktop/FFmpeg/build.gradle).
 
 **iOS**: H.265 is supported since iOS 11. AV1 requires a current high-end
 device with a hardware decoder.

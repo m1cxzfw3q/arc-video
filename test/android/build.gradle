@@ -8,7 +8,7 @@ apply plugin: 'com.android.application'
 
 android {
 	compileSdkVersion = project.compileSdk
-	namespace = 'com.badlogic.gdx.video.test'
+	namespace = 'arc.video.test'
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
@@ -42,7 +42,7 @@ android {
 		}
     }
 	defaultConfig {
-		applicationId 'com.badlogic.gdx.video.test'
+		applicationId 'arc.video.test'
 		minSdkVersion project.minSdk
 		targetSdkVersion project.targetSdk
 		versionCode 1
@@ -60,13 +60,13 @@ configurations { natives }
 
 dependencies {
 	implementation project(':test:core')
-	implementation project(':gdx-video-android')
-	implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+	implementation project(':arc-video-android')
+	implementation "com.github.Anuken.Arc:backend-android:$arcVersion"
 
-	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
-	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
-	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
-	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-armeabi-v7a"
+	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-arm64-v8a"
+	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-x86"
+	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-x86_64"
 }
 
 // Called every time gradle gets executed, takes the native dependencies of
@@ -117,7 +117,7 @@ task run(type: Exec) {
 	}
 
 	def adb = path + "/platform-tools/adb"
-	commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.badlogic.gdx.video.test/com.badlogic.gdx.video.test.android.AndroidLauncher'
+	commandLine "$adb", 'shell', 'am', 'start', '-n', 'arc.video.test/arc.video.test.android.AndroidLauncher'
 }
 
 eclipse.project {
