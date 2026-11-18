@@ -14,13 +14,13 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Null;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
+import arc.Application.ApplicationType;
+import arc.Gdx;
+import arc.utils.Null;
+import arc.utils.reflect.ClassReflection;
+import arc.utils.reflect.ReflectionException;
 
 /** This class is used to provide a way of creating a VideoPlayer, without knowing the platform the program is running on. This
  * has to be extended for each supported platform.

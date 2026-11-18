@@ -2,11 +2,11 @@ apply plugin: "java-library"
 
 if (JavaVersion.current().isJava9Compatible()) {
     compileJava {
-        options.release = 7
+        options.release = 17
     }
 }
-targetCompatibility = 1.7
-sourceCompatibility = 1.7
+targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_17
 
 java {
     withSourcesJar()
@@ -50,6 +50,7 @@ jnigen {
         return [ "$outPath/include" ]
     }
 
+    /*
     addWindows(x32, x86) {
         headerDirs += genHeaders("windows32")
         cppFlags += " -DWIN32 "
@@ -92,6 +93,7 @@ jnigen {
         cppFlags += " -mmacosx-version-min=10.11"
         linkerFlags += " -mmacosx-version-min=10.11"
     }
+     */
 }
 
 tasks.register('jnigenBuildWindowsAll') {
@@ -102,9 +104,9 @@ tasks.register('jnigenBuildLinuxAll') {
     dependsOn jnigenBuildLinux64, jnigenBuildLinuxARM, jnigenBuildLinuxARM64
 }
 
-tasks.register('jnigenBuildMacosAll') {
-    dependsOn jnigenBuildMacOsX64, jnigenBuildMacOsXARM64
-}
+//tasks.register('jnigenBuildMacosAll') {
+//    dependsOn jnigenBuildMacOsX64, jnigenBuildMacOsXARM64
+//}
 
 jar {
     from fileTree("libs").files

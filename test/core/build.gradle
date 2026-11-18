@@ -4,6 +4,6 @@ apply plugin: 'java-library'
 eclipse.project.name = appName + '-core'
 
 dependencies {
-	implementation project(':gdx-video-core')
-	api "com.badlogicgames.gdx:gdx:$gdxVersion"
+	implementation project(':arc-video-core')
+	api "com.github.Anuken.Arc:arc-core:$arcVersion"
 }

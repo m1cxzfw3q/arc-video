@@ -1,15 +1,15 @@
 apply plugin: 'application'
 
 sourceSets.main.resources.srcDirs += [ project(':test').file('assets').path ]
-mainClassName = 'com.badlogic.gdx.video.test.desktop.DesktopLauncher'
+mainClassName = 'arc.video.test.desktop.DesktopLauncher'
 eclipse.project.name = appName + '-desktop'
-sourceCompatibility = 8.0
+sourceCompatibility = 17
 
 dependencies {
 	implementation project(':test:core')
-	implementation project(':gdx-video-desktop:gdx-video-lwjgl')
-	implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-	implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+	implementation project(':arc-video-desktop:arc-video-sdl')
+	implementation "com.github.Anuken.Arc:backend-sdl:$arcVersion"
+	implementation "com.github.Anuken.Arc:natives-desktop:$arcVersion"
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 

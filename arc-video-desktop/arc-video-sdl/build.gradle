@@ -2,11 +2,11 @@ apply plugin: "java-library"
 
 if (JavaVersion.current().isJava9Compatible()) {
     compileJava {
-        options.release = 7
+        options.release = 17
     }
 }
-targetCompatibility = 1.7
-sourceCompatibility = 1.7
+targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_17
 
 java {
     withSourcesJar()
@@ -22,6 +22,6 @@ sourceSets {
 }
 
 dependencies {
-    api project(":gdx-video-desktop")
-    api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+    api project(":arc-video-desktop")
+    api "com.github.Anuken.Arc:backend-sdl:$arcVersion"
 }

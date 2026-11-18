@@ -14,11 +14,11 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import arc.files.Fi;
+import arc.graphics.Texture;
+import arc.graphics.Texture.TextureFilter;
 
 import java.io.FileNotFoundException;
 
@@ -38,7 +38,7 @@ public abstract class AbstractVideoPlayer implements VideoPlayer {
 
 	@Override
 	@Deprecated
-	public final boolean play (FileHandle file) throws FileNotFoundException {
+	public final boolean play (Fi file) throws FileNotFoundException {
 		boolean loaded = load(file);
 		if (loaded) {
 			play();

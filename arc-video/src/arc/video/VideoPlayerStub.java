@@ -14,19 +14,19 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
 import java.io.FileNotFoundException;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.utils.Null;
+import arc.files.Fi;
+import arc.graphics.Texture;
+import arc.graphics.Texture.TextureFilter;
+import arc.util.Nullable;
 
 class VideoPlayerStub extends AbstractVideoPlayer {
 
 	@Override
-	public boolean load (FileHandle file) throws FileNotFoundException {
+	public boolean load (Fi file) throws FileNotFoundException {
 		return false;
 	}
 
@@ -41,7 +41,7 @@ class VideoPlayerStub extends AbstractVideoPlayer {
 	}
 
 	@Override
-	@Null
+	@Nullable
 	public Texture getTexture () {
 		return null;
 	}

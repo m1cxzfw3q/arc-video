@@ -14,15 +14,15 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
 import java.io.FileNotFoundException;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Null;
+import arc.files.Fi;
+import arc.graphics.Texture;
+import arc.graphics.Texture.TextureFilter;
+import arc.util.Disposable;
+import arc.util.Nullable;
 
 /** The VideoPlayer will play a video on any given mesh, using textures. It can be reused, but can only play one video at the
  * time.
@@ -34,7 +34,7 @@ public interface VideoPlayer extends Disposable {
 	}
 
 	interface CompletionListener {
-		void onCompletionListener (FileHandle file);
+		void onCompletionListener (Fi file);
 	}
 
 	/** This function will prepare the VideoPlayer to play the given file. If a video is already played, it will be stopped, and
@@ -42,7 +42,7 @@ public interface VideoPlayer extends Disposable {
 	 * @param file The file containing the video which should be played.
 	 * @return Whether loading the file was successful.
 	 * @throws FileNotFoundException if the file does not exist */
-	boolean load (FileHandle file) throws FileNotFoundException;
+	boolean load (Fi file) throws FileNotFoundException;
 
 	/** This function will start playing the video. */
 	void play ();
@@ -54,7 +54,7 @@ public interface VideoPlayer extends Disposable {
 	 * @param file The file containing the video which should be played.
 	 * @return Whether loading the file was successful. */
 	@Deprecated
-	boolean play (FileHandle file) throws FileNotFoundException;
+	boolean play (Fi file) throws FileNotFoundException;
 
 	/** This function needs to be called every frame, so that the player can update all the buffers and you can draw the frame.
 	 * Normal use case is to start rendering after {@link #isBuffered()} returns true.
@@ -62,7 +62,7 @@ public interface VideoPlayer extends Disposable {
 	boolean update ();
 
 	/** @return The current video frame. Null if video was not started yet */
-	@Null
+	@Nullable
 	Texture getTexture ();
 
 	/** Whether the buffer containing the video is completely filled. The size of the buffer is platform specific, and cannot

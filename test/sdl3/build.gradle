@@ -1,15 +1,15 @@
 apply plugin: 'application'
 
 sourceSets.main.resources.srcDirs += [ project(':test').file('assets').path ]
-mainClassName = 'com.badlogic.gdx.video.test.lwjgl3.Lwjgl3Launcher'
-eclipse.project.name = appName + '-lwjgl3'
+mainClassName = 'arc.video.test.sdl3.Lwjgl3Launcher'
+eclipse.project.name = appName + '-sdl3'
 sourceCompatibility = 8.0
 
 dependencies {
 	implementation project(':test:core')
-	implementation project(':gdx-video-desktop:gdx-video-lwjgl3')
-	implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-	implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+	implementation project(':arc-video-desktop:arc-video-sdl3')
+	implementation "com.github.Anuken.Arc:backend-sdl3:$arcVersion"
+	implementation "com.github.Anuken.Arc:natives-desktop:$arcVersion"
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 

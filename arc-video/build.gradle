@@ -2,11 +2,11 @@ apply plugin: "java-library"
 
 if (JavaVersion.current().isJava9Compatible()) {
     compileJava {
-        options.release = 7
+        options.release = 17
     }
 }
-targetCompatibility = 1.7
-sourceCompatibility = 1.7
+targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_17
 
 java {
     withSourcesJar()
@@ -24,7 +24,7 @@ sourceSets {
 archivesBaseName = 'arc-video'
 
 dependencies {
-    api "com.github.Anuken.Arc:arc-dore:$arcVersion"
+    api "com.github.Anuken.Arc:arc-core:$arcVersion"
 }
 
 eclipse.project {

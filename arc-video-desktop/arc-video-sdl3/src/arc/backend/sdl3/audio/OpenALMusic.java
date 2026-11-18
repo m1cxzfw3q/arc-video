@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.lwjgl3.audio;
+package arc.backend.sdl3.audio;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
@@ -23,11 +23,11 @@ import java.nio.IntBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL11;
 
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.FloatArray;
-import com.badlogic.gdx.utils.GdxRuntimeException;
+import arc.audio.Music;
+import arc.files.Fi;
+import arc.math.Mathf;
+import arc.utils.FloatArray;
+import arc.util.GdxRuntimeException;
 
 import static org.lwjgl.openal.AL10.*;
 
@@ -49,11 +49,11 @@ public abstract class OpenALMusic implements Music {
 	private float pan = 0;
 	private float renderedSeconds, maxSecondsPerBuffer;
 
-	protected final FileHandle file;
+	protected final Fi file;
 
 	private OnCompletionListener onCompletionListener;
 
-	public OpenALMusic (OpenALLwjgl3Audio audio, FileHandle file) {
+	public OpenALMusic (OpenALLwjgl3Audio audio, Fi file) {
 		this.audio = audio;
 		this.file = file;
 		this.onCompletionListener = null;
@@ -160,8 +160,8 @@ public abstract class OpenALMusic implements Music {
 		this.pan = pan;
 		if (audio.noDevice) return;
 		if (sourceID == -1) return;
-		alSource3f(sourceID, AL_POSITION, MathUtils.cos((pan - 1) * MathUtils.HALF_PI), 0,
-			MathUtils.sin((pan + 1) * MathUtils.HALF_PI));
+		alSource3f(sourceID, AL_POSITION, Mathf.cos((pan - 1) * Mathf.HALF_PI), 0,
+				Mathf.sin((pan + 1) * Mathf.HALF_PI));
 		alSourcef(sourceID, AL_GAIN, volume);
 	}
 

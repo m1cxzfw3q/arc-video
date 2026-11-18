@@ -14,19 +14,18 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video.assets;
+package arc.video.assets;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.assets.AssetLoaderParameters;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.video.VideoPlayer;
-import com.badlogic.gdx.video.VideoPlayerCreator;
+import arc.assets.AssetDescriptor;
+import arc.assets.AssetLoaderParameters;
+import arc.assets.AssetManager;
+import arc.assets.loaders.AsynchronousAssetLoader;
+import arc.assets.loaders.FileHandleResolver;
+import arc.files.Fi;
+import arc.graphics.Texture.TextureFilter;
+import arc.struct.Seq;
+import arc.video.VideoPlayer;
+import arc.video.VideoPlayerCreator;
 
 import java.io.FileNotFoundException;
 
@@ -39,7 +38,7 @@ public class VideoLoader extends AsynchronousAssetLoader<VideoPlayer, VideoLoade
 	private VideoPlayer videoPlayer;
 
 	@Override
-	public void loadAsync (AssetManager manager, String fileName, FileHandle file, VideoParameter parameter) {
+	public void loadAsync (AssetManager manager, String fileName, Fi file, VideoParameter parameter) {
 		videoPlayer = null;
 		videoPlayer = VideoPlayerCreator.createVideoPlayer();
 		videoPlayer.setFilter(parameter.minFilter, parameter.magFilter);
@@ -48,19 +47,19 @@ public class VideoLoader extends AsynchronousAssetLoader<VideoPlayer, VideoLoade
 		try {
 			videoPlayer.load(file);
 		} catch (FileNotFoundException ignored) {
-			Gdx.app.error("gdx-video", "Video file " + fileName + " not found");
+			Log.err("gdx-video", "Video file " + fileName + " not found");
 		}
 	}
 
 	@Override
-	public VideoPlayer loadSync (AssetManager manager, String fileName, FileHandle file, VideoParameter parameter) {
+	public VideoPlayer loadSync (AssetManager manager, String fileName, Fi file, VideoParameter parameter) {
 		VideoPlayer player = this.videoPlayer;
 		this.videoPlayer = null;
 		return player;
 	}
 
 	@Override
-	public Array<AssetDescriptor> getDependencies (String fileName, FileHandle file, VideoParameter parameter) {
+	public Seq<AssetDescriptor> getDependencies (String fileName, Fi file, VideoParameter parameter) {
 		return null;
 	}
 

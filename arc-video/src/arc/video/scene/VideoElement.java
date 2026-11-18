@@ -14,14 +14,14 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video.scenes.scene2d;
+package arc.video.scenes.scene2d;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.video.VideoPlayer;
+import arc.graphics.Color;
+import arc.graphics.Texture;
+import arc.graphics.g2d.Batch;
+import arc.scenes.scene2d.Actor;
+import arc.utils.GdxRuntimeException;
+import arc.video.VideoPlayer;
 
 /** A simple actor that allows you to integrate a video in a 2D scene.
  * <p>
@@ -29,7 +29,7 @@ import com.badlogic.gdx.video.VideoPlayer;
  * disposing of the {@link VideoPlayer} is left to the user.
  * <p>
  * The actor must be removed before disposing the VideoPlayer and must not be used again after. */
-public class VideoActor extends Actor {
+public class VideoElement extends Actor {
 	/** Creates a new video actor that displays the video from the provided player.
 	 *
 	 * @param player The video player that this actor uses. Must not be null! */

@@ -63,21 +63,23 @@ dependencies {
 	implementation project(':arc-video-android')
 	implementation "com.github.Anuken.Arc:backend-android:$arcVersion"
 
-	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-armeabi-v7a"
-	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-arm64-v8a"
-	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-x86"
-	natives "com.github.Anuken.Arc:arc-natives:$arcVersion:natives-x86_64"
+	natives "com.github.Anuken.Arc:natives-android:$arcVersion:armeabi-v7a"
+	natives "com.github.Anuken.Arc:natives-android:$arcVersion:arm64-v8a"
+	natives "com.github.Anuken.Arc:natives-android:$arcVersion:x86"
+	natives "com.github.Anuken.Arc:natives-android:$arcVersion:x86_64"
 }
 
 // Called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.
-task copyAndroidNatives() {
+tasks.register('copyAndroidNatives') {
 	doFirst {
 		file("libs/armeabi-v7a/").mkdirs()
 		file("libs/arm64-v8a/").mkdirs()
 		file("libs/x86_64/").mkdirs()
 		file("libs/x86/").mkdirs()
+
+		System.out.println(configurations.getByName("natives").copy().files)
 
 		configurations.getByName("natives").copy().files.each { jar ->
     	    def outputDir = null
