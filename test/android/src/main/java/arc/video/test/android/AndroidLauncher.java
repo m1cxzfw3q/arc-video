@@ -20,7 +20,7 @@ import android.os.Bundle;
 
 import arc.backend.android.AndroidApplication;
 import arc.backend.android.AndroidApplicationConfiguration;
-import arc.video.test.GdxVideoTest;
+import arc.video.test.ArcVideoTest;
 
 /** Launches the Android application. */
 public class AndroidLauncher extends AndroidApplication {

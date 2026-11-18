@@ -1,12 +1,9 @@
 configure([
-        project(":gdx-video-core"),
-        project(":gdx-video-android"),
-        project(":gdx-video-desktop"),
-        project(":gdx-video-desktop:gdx-video-lwjgl"),
-        project(":gdx-video-desktop:gdx-video-lwjgl3"),
-        project(":gdx-video-gwt"),
-        project(":gdx-video-teavm"),
-        project(":gdx-video-robovm")
+        project(":arc-video-core"),
+        project(":arc-video-android"),
+        project(":arc-video-desktop"),
+        project(":arc-video-desktop:arc-video-sdl"),
+        project(":arc-video-desktop:arc-video-sdl3"),
 ])
         {
             apply plugin: 'maven-publish'
