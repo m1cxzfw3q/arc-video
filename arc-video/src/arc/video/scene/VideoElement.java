@@ -14,13 +14,13 @@
  * limitations under the License.
  ******************************************************************************/
 
-package arc.video.scenes.scene2d;
+package arc.video.scene;
 
 import arc.graphics.Color;
 import arc.graphics.Texture;
 import arc.graphics.g2d.Batch;
-import arc.scenes.scene2d.Actor;
-import arc.utils.GdxRuntimeException;
+import arc.scene.Element;
+import arc.util.ArcRuntimeException;
 import arc.video.VideoPlayer;
 
 /** A simple actor that allows you to integrate a video in a 2D scene.
@@ -29,12 +29,12 @@ import arc.video.VideoPlayer;
  * disposing of the {@link VideoPlayer} is left to the user.
  * <p>
  * The actor must be removed before disposing the VideoPlayer and must not be used again after. */
-public class VideoElement extends Actor {
+public class VideoElement extends Element {
 	/** Creates a new video actor that displays the video from the provided player.
 	 *
 	 * @param player The video player that this actor uses. Must not be null! */
-	public VideoActor (VideoPlayer player) {
-		if (player == null) throw new GdxRuntimeException("VideoActor: player must not be null!");
+	public VideoElement (VideoPlayer player) {
+		if (player == null) throw new ArcRuntimeException("VideoElement: player must not be null!");
 		this.player = player;
 	}
 
@@ -50,10 +50,9 @@ public class VideoElement extends Actor {
 	public void draw (Batch batch, float parentAlpha) {
 		Texture texture = player.getTexture();
 		if (texture == null) return;
-		Color color = getColor();
+		Color color = this.color;
 		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-		batch.draw(texture, getX(), getY(), getWidth(), getHeight(), 0, 0, player.getVideoWidth(), player.getVideoHeight(), false,
-			false);
+		batch.draw(texture, x, y, getWidth(), getHeight(), 0, 0, player.getVideoWidth(), player.getVideoHeight());
 	}
 
 	public VideoPlayer getVideoPlayer () {

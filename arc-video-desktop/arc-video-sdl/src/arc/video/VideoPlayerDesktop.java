@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
-import com.badlogic.gdx.audio.Music;
+import arc.audio.Music;
 
 import java.nio.ByteBuffer;
 

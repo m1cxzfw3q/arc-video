@@ -14,8 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
+import android.annotation.SuppressLint;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.SurfaceTexture;
@@ -29,19 +30,20 @@ import android.opengl.GLES20;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Surface;
-import com.badlogic.gdx.Files.FileType;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.android.AndroidApplicationBase;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.Null;
+import arc.Files.FileType;
+import arc.Core;
+import arc.backend.android.AndroidApplication;
+import arc.files.Fi;
+import arc.graphics.GL20;
+import arc.graphics.Pixmap;
+import arc.graphics.Texture;
+import arc.graphics.gl.FrameBuffer;
+import arc.graphics.gl.ImmediateModeRenderer20;
+import arc.graphics.gl.Shader;
+import arc.math.Mat;
+import arc.util.Buffers;
+import arc.util.Log;
+import arc.util.Nullable;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -84,9 +86,9 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 			return true;
 		}
 		if (renderer == null) {
-			shader = new ShaderProgram(vertexShaderCode, fragmentShaderCode);
+			shader = new Shader(vertexShaderCode, fragmentShaderCode);
 			renderer = new ImmediateModeRenderer20(4, false, false, 1, shader);
-			transform = new Matrix4().setToOrtho2D(0, 0, 1, 1);
+			transform = new Mat().setOrtho(0, 0, 1, 1);
 		} else if (initialized) {
 			videoTexture.setOnFrameAvailableListener(this);
 			surface = new Surface(videoTexture);
@@ -96,7 +98,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 	}
 
 	private void queueSetupStep () {
-		Gdx.app.postRunnable(new Runnable() {
+		Core.app.post(new Runnable() {
 			@Override
 			public void run () {
 				setupStep();
@@ -104,8 +106,8 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		});
 	}
 
-	private ShaderProgram shader;
-	private Matrix4 transform;
+	private Shader shader;
+	private Mat transform;
 	private IntBuffer textureBuffer;
 	private SurfaceTexture videoTexture;
 	private Surface surface;
@@ -139,14 +141,14 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 	private void initializeMediaPlayer () {
 		if (handler == null) handler = new Handler(Looper.getMainLooper());
 
-		Gdx.app.postRunnable(new Runnable() {
+		Core.app.post(new Runnable() {
 			@Override
 			public void run () {
-				textureBuffer = BufferUtils.newIntBuffer(1);
-				Gdx.gl.glGenTextures(1, textureBuffer);
+				textureBuffer = Buffers.newIntBuffer(1);
+				GLES20.glGenTextures(1, textureBuffer);
 				final int textureID = textureBuffer.get(0);
 
-				Gdx.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureID);
+				Core.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureID);
 
 				handler.post(new Runnable() {
 					@Override
@@ -160,14 +162,14 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		});
 	}
 
-	private void playInternal (final FileHandle file) {
+	private void playInternal (final Fi file) {
 		prepared = false;
 		frame = null;
 		stopped = false;
 
 		// If we haven't finished loading the media player yet, wait without blocking.
 		if (!initialized) {
-			Gdx.app.postRunnable(new Runnable() {
+			Core.app.post(new Runnable() {
 				@Override
 				public void run () {
 					if (stopped) return;
@@ -186,7 +188,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 					sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
 				}
 
-				Gdx.app.postRunnable(new Runnable() {
+				Core.app.post(new Runnable() {
 					@Override
 					public void run () {
 						if (fbo != null && (fbo.getWidth() != player.getVideoWidth() || fbo.getHeight() != player.getVideoHeight())) {
@@ -194,7 +196,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 							fbo = null;
 						}
 						if (fbo == null) {
-							fbo = new FrameBuffer(Pixmap.Format.RGB888, player.getVideoWidth(), player.getVideoHeight(), false);
+							fbo = new FrameBuffer(Pixmap.Format.rgb888, player.getVideoWidth(), player.getVideoHeight(), false);
 						}
 						prepared = true;
 						player.setVolume(currentVolume, currentVolume);
@@ -207,9 +209,10 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 			}
 		});
 		player.setOnErrorListener(new OnErrorListener() {
-			@Override
+			@SuppressLint("DefaultLocale")
+            @Override
 			public boolean onError (MediaPlayer mp, int what, int extra) {
-				Gdx.app.error("gdx-video", String.format("Error occurred: %d, %d\n", what, extra));
+				Log.err("arc-video", String.format("Error occurred: %d, %d\n", what, extra));
 				return false;
 			}
 		});
@@ -225,8 +228,8 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		});
 
 		try {
-			if (file.type() == FileType.Classpath || (file.type() == FileType.Internal && !file.file().exists())) {
-				AssetManager assets = ((AndroidApplicationBase)Gdx.app).getContext().getAssets();
+			if (file.type() == FileType.classpath || (file.type() == FileType.internal && !file.file().exists())) {
+				AssetManager assets = ((AndroidApplication)Core.app).getAssets();
 				AssetFileDescriptor descriptor = assets.openFd(file.path());
 				player.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
 				descriptor.close();
@@ -235,12 +238,12 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 			}
 			player.prepareAsync();
 		} catch (IOException e) {
-			Gdx.app.error("gdx-video", "Error loading video file: " + file.path(), e);
+			Log.err("arc-video", "Error loading video file: " + file.path(), e);
 		}
 	}
 
 	@Override
-	public boolean load (FileHandle file) throws FileNotFoundException {
+	public boolean load (Fi file) throws FileNotFoundException {
 		if (!file.exists()) {
 			throw new FileNotFoundException("Could not find file: " + file.path());
 		}
@@ -278,8 +281,8 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		fbo.begin();
 		shader.bind();
 
-		Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
-		Gdx.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, getTextureExternal());
+		Core.gl.glActiveTexture(GL20.GL_TEXTURE0);
+		Core.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, getTextureExternal());
 		shader.setUniformi("u_sampler0", 0);
 		renderer.begin(transform, GL20.GL_TRIANGLE_STRIP);
 		renderer.texCoord(0, 0);
@@ -293,9 +296,9 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		renderer.end();
 		fbo.end();
 
-		Texture colorBufferTexture = fbo.getColorBufferTexture();
-		if (frame != colorBufferTexture) {
-			frame = colorBufferTexture;
+		Texture texture = fbo.getTexture();
+		if (frame != texture) {
+			frame = texture;
 			frame.setFilter(minFilter, magFilter);
 		}
 
@@ -303,7 +306,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 	}
 
 	@Override
-	@Null
+	@Nullable
 	public Texture getTexture () {
 		return frame;
 	}

@@ -14,27 +14,24 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
 import java.nio.ByteBuffer;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.audio.OpenALLwjglAudio;
-import com.badlogic.gdx.backends.lwjgl.audio.OpenALMusic;
+import arc.Core;
+import arc.audio.Music;
 
 /** The RawMusic class extends OpenAlMusic, and retrieves it's audio from a VideoDecoder instance.
  *
  * @author Rob Bogie <rob.bogie@codepoke.net> */
-class RawMusic extends OpenALMusic {
+class RawMusic extends Music {
 	VideoDecoder decoder;
 	ByteBuffer backBuffer;
 
 	public RawMusic (VideoDecoder decoder, ByteBuffer buffer, int channels, int sampleRate) {
-		super((OpenALLwjglAudio)Gdx.audio, null);
 		this.decoder = decoder;
 		backBuffer = buffer;
 		backBuffer.position(backBuffer.limit());
-		setup(channels, 16, sampleRate);
 	}
 
 	@Override

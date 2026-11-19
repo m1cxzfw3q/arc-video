@@ -17,8 +17,8 @@
 package arc.video;
 
 import arc.Core;
-import arc.backend.sdl3.audio.OpenALLwjgl3Audio;
-import arc.backend.sdl3.audio.OpenALMusic;
+import arc.backend.sdl.audio.OpenALSdl3Audio;
+import arc.backend.sdl.audio.OpenALMusic;
 
 import java.nio.ByteBuffer;
 
@@ -30,7 +30,7 @@ class RawMusic extends OpenALMusic {
 	ByteBuffer backBuffer;
 
 	public RawMusic (VideoDecoder decoder, ByteBuffer buffer, int channels, int sampleRate) {
-		super((OpenALLwjgl3Audio)Core.audio, null);
+		super((OpenALSdl3Audio)Core.audio, null);
 		this.decoder = decoder;
 		backBuffer = buffer;
 		backBuffer.position(backBuffer.limit());
@@ -59,8 +59,7 @@ class RawMusic extends OpenALMusic {
 	}
 
 	@Override
-	public void reset () {
+	public void reset() {
 
 	}
-
 }

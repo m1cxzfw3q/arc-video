@@ -1,2 +1,2 @@
-include "arc-video", "arc-video-desktop", "arc-video-desktop:FFmpeg", "arc-video-desktop:arc-video-sdl", "arc-video-desktop:arc-video-sdl3", "arc-video-android", "test:core", "test:android", "test:desktop", "test:sdl3"
+include "arc-video", "arc-video-desktop", "arc-video-desktop:FFmpeg", "arc-video-desktop:arc-video-sdl", "arc-video-desktop:arc-video-sdl3", "arc-video-android"
 project(":arc-video").name = "arc-video-core"

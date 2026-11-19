@@ -17,10 +17,11 @@
 package arc.video;
 
 import arc.Application.ApplicationType;
-import arc.Gdx;
-import arc.utils.Null;
-import arc.utils.reflect.ClassReflection;
-import arc.utils.reflect.ReflectionException;
+import arc.Core;
+import arc.util.Log;
+import arc.util.Nullable;
+import arc.util.reflect.ClassReflection;
+import arc.util.reflect.ReflectionException;
 
 /** This class is used to provide a way of creating a VideoPlayer, without knowing the platform the program is running on. This
  * has to be extended for each supported platform.
@@ -32,7 +33,7 @@ public class VideoPlayerCreator {
 	/** Creates a VideoPlayer.
 	 *
 	 * @return A new instance of VideoPlayer */
-	@Null
+	@Nullable
 	public static VideoPlayer createVideoPlayer () {
 		initialize();
 		if (videoPlayerClass == null) return new VideoPlayerStub();
@@ -49,26 +50,18 @@ public class VideoPlayerCreator {
 		if (videoPlayerClass != null) return;
 
 		String className = null;
-		ApplicationType type = Gdx.app.getType();
+		ApplicationType type = Core.app.getType();
 
-		if (type == ApplicationType.Android) {
-			if (Gdx.app.getVersion() >= 12) {
-				className = "com.badlogic.gdx.video.VideoPlayerAndroid";
+		if (type == ApplicationType.android) {
+			if (Core.app.getVersion() >= 12) {
+				className = "arc.video.VideoPlayerAndroid";
 			} else {
-				Gdx.app.log("Gdx-Video", "VideoPlayer can't be used on android < API level 12");
+				Log.info("Arc-Video", "VideoPlayer can't be used on android < API level 12");
 			}
-		} else if (type == ApplicationType.iOS) {
-			if (Gdx.app.getVersion() >= 15) {
-				className = "com.badlogic.gdx.video.VideoPlayerIos";
-			} else {
-				Gdx.app.log("Gdx-Video", "VideoPlayer can't be used on iOS < 15");
-			}
-		} else if (type == ApplicationType.Desktop) {
-			className = "com.badlogic.gdx.video.VideoPlayerDesktop";
-		} else if (type == ApplicationType.WebGL) {
-			className = "com.badlogic.gdx.video.VideoPlayerGwt";
+		}else if (type == ApplicationType.desktop) {
+			className = "arc.video.VideoPlayerDesktop";
 		} else {
-			Gdx.app.log("Gdx-Video", "Platform is not supported by the Gdx Video Extension");
+			Log.info("Arc-Video", "Platform is not supported by the Arc Video Extension");
 		}
 
 		try {

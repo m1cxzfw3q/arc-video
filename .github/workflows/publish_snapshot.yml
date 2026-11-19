@@ -33,13 +33,13 @@ jobs:
       run: brew install nasm meson
 
     - name: Build with Gradle
-      run: ./gradlew :gdx-video-desktop:FFmpeg:buildFFmpegMacosAll :gdx-video-desktop:jnigenBuildMacosAll
+      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegMacosAll :arc-video-desktop:jnigenBuildAllMacOsX
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: natives-macos
-        path: gdx-video-desktop/libs/**/*.dylib
+        path: arc-video-desktop/libs/**/*.dylib
         if-no-files-found: error
 
   natives-linux:
@@ -68,13 +68,13 @@ jobs:
         sudo apt install -y --force-yes gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf libc6-dev-armhf-cross
 
     - name: Build natives with Gradle
-      run: ./gradlew :gdx-video-desktop:FFmpeg:buildFFmpegLinuxAll :gdx-video-desktop:jnigenBuildLinuxAll
+      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigenBuildAllLinux
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: natives-linux
-        path: gdx-video-desktop/libs/**/*.so
+        path: arc-video-desktop/libs/**/*.so
         if-no-files-found: error
 
   natives-windows:
@@ -101,13 +101,13 @@ jobs:
         sudo apt install -y --force-yes mingw-w64 lib32z1
 
     - name: Build natives with Gradle
-      run: ./gradlew :gdx-video-desktop:FFmpeg:buildFFmpegWindowsAll :gdx-video-desktop:jnigenBuildWindowsAll
+      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegWindowsAll :arc-video-desktop:jnigenBuildAllWindows
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: natives-windows
-        path: gdx-video-desktop/libs/**/*.dll
+        path: arc-video-desktop/libs/**/*.dll
         if-no-files-found: error
 
   publish:
@@ -138,19 +138,19 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         pattern: natives-*
-        path: gdx-video-desktop/libs
+        path: arc-video-desktop/libs
         merge-multiple: true
 
     - name: Create JAR with natives for desktop
       run: ./gradlew jnigenJarNativesDesktop --info
 
     - name: Snapshot build deploy
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository_owner == 'libgdx'
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository_owner == 'arc'
       run: |
         ./gradlew build publish
 
     - name: Import GPG key
-      if: github.event_name == 'release' && github.repository_owner == 'libgdx'
+      if: github.event_name == 'release' && github.repository_owner == 'arc'
       id: import_gpg
       uses: crazy-max/ghaction-import-gpg@1c6a9e9d3594f2d743f1b1dd7669ab0dfdffa922
       with:
@@ -158,11 +158,11 @@ jobs:
         passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
     - name: Release build deploy
-      if: github.event_name == 'release' && github.repository_owner == 'libgdx'
+      if: github.event_name == 'release' && github.repository_owner == 'arc'
       run: ./gradlew build publish --info -PRELEASE -Psigning.gnupg.keyId=${{ secrets.GPG_KEYID }} -Psigning.gnupg.passphrase=${{ secrets.GPG_PASSPHRASE }} -Psigning.gnupg.keyName=${{ secrets.GPG_KEYID }}
 
     - name: Trigger manual upload to Central Repository
-      if: github.event_name == 'release' && github.repository_owner == 'libgdx'
+      if: github.event_name == 'release' && github.repository_owner == 'arc'
       run: |
         curl -X POST \
           -H "Authorization: Bearer $(echo -n '${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }}' | base64)" \

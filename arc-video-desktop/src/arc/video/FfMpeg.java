@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
+package arc.video;
 
-import com.badlogic.gdx.utils.SharedLibraryLoader;
+import arc.util.SharedLibraryLoader;
 
 /** This class manages the loading of the native libraries that wrap FFMpeg. It allows changing the path from which it loads the
  * libraries, and defaults to loading the file from jar containing the class.
@@ -54,7 +54,6 @@ public class FfMpeg {
 		try {
 			libLoader.load(NATIVE_LIBRARY_NAME);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 			loaded = false;
 			return false;

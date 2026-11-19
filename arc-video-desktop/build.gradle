@@ -5,12 +5,13 @@ if (JavaVersion.current().isJava9Compatible()) {
         options.release = 17
     }
 }
-targetCompatibility = JavaVersion.VERSION_17
-sourceCompatibility = JavaVersion.VERSION_17
 
 java {
     withSourcesJar()
     withJavadocJar()
+
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 sourceSets {
@@ -50,7 +51,6 @@ jnigen {
         return [ "$outPath/include" ]
     }
 
-    /*
     addWindows(x32, x86) {
         headerDirs += genHeaders("windows32")
         cppFlags += " -DWIN32 "
@@ -93,20 +93,7 @@ jnigen {
         cppFlags += " -mmacosx-version-min=10.11"
         linkerFlags += " -mmacosx-version-min=10.11"
     }
-     */
 }
-
-tasks.register('jnigenBuildWindowsAll') {
-    dependsOn jnigenBuildWindows, jnigenBuildWindows64
-}
-
-tasks.register('jnigenBuildLinuxAll') {
-    dependsOn jnigenBuildLinux64, jnigenBuildLinuxARM, jnigenBuildLinuxARM64
-}
-
-//tasks.register('jnigenBuildMacosAll') {
-//    dependsOn jnigenBuildMacOsX64, jnigenBuildMacOsXARM64
-//}
 
 jar {
     from fileTree("libs").files

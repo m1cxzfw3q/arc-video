@@ -14,9 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.video;
-
-import static com.badlogic.gdx.Application.LOG_DEBUG;
+package arc.video;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
@@ -25,14 +23,14 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Null;
-import com.badlogic.gdx.video.VideoDecoder.VideoDecoderBuffers;
+import arc.Core;
+import arc.audio.Music;
+import arc.files.Fi;
+import arc.graphics.GL20;
+import arc.graphics.Texture;
+import arc.util.Log;
+import arc.util.Nullable;
+import arc.video.VideoDecoder.VideoDecoderBuffers;
 
 /** Desktop implementation of the VideoPlayer
  *
@@ -53,7 +51,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 	int videoBufferWidth;
 	VideoSizeListener sizeListener;
 	CompletionListener completionListener;
-	FileHandle currentFile;
+	Fi currentFile;
 
 	BufferedInputStream inputStream;
 	ReadableByteChannel fileChannel;
@@ -74,7 +72,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 	}
 
 	@Override
-	public boolean load (FileHandle file) throws FileNotFoundException {
+	public boolean load (Fi file) throws FileNotFoundException {
 		if (file == null) {
 			return false;
 		}
@@ -91,7 +89,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 			stop();
 		}
 
-		VideoDecoder.setDebug(Gdx.app.getLogLevel() >= LOG_DEBUG);
+		VideoDecoder.setDebug(false);
 
 		currentFile = file;
 		inputStream = file.read(256 * 1024);
@@ -117,7 +115,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 				currentVideoWidth = buffers.getVideoWidth();
 				currentVideoHeight = buffers.getVideoHeight();
 				videoBufferWidth = buffers.getVideoBufferWidth();
-				if (texture != null && (texture.getWidth() != getTextureWidth() || texture.getHeight() != getTextureHeight())) {
+				if (texture != null && (texture.width != getTextureWidth() || texture.height != getTextureHeight())) {
 					texture.dispose();
 					texture = null;
 				}
@@ -125,7 +123,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 				return false;
 			}
 		} catch (Exception e) {
-			Gdx.app.error("gdx-video", "Error loading video", e);
+			Log.err("gdx-video", "Error loading video", e);
 			return false;
 		}
 
@@ -177,14 +175,14 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 
 			boolean newFrame = false;
 
-			long currentFrameID = Gdx.graphics.getFrameId();
+			long currentFrameID = Core.graphics.getFrameId();
 			if (currentFrameID != lastFrameID) {
-				lastFrameID = Gdx.graphics.getFrameId();
+				lastFrameID = Core.graphics.getFrameId();
 				// Update video position
 				if (audio != null) {
 					targetPosition = audio.getPosition();
 				} else {
-					float delta = Gdx.graphics.getDeltaTime();
+					float delta = Core.graphics.getDeltaTime();
 					if (delta < 0.25f) {
 						targetPosition += delta;
 					}
@@ -203,11 +201,11 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 					}
 					currentPosition = newPosition;
 					if (texture == null) {
-						texture = new Texture(getTextureWidth(), getTextureHeight(), Format.RGB888);
+						texture = new Texture(getTextureWidth(), getTextureHeight());
 						texture.setFilter(minFilter, magFilter);
 					}
 					texture.bind();
-					Gdx.gl.glTexImage2D(GL20.GL_TEXTURE_2D, 0, GL20.GL_RGB, getTextureWidth(), getTextureHeight(), 0, GL20.GL_RGB,
+					Core.gl.glTexImage2D(GL20.GL_TEXTURE_2D, 0, GL20.GL_RGB, getTextureWidth(), getTextureHeight(), 0, GL20.GL_RGB,
 						GL20.GL_UNSIGNED_BYTE, videoData);
 					newFrame = true;
 				} else if (isFirstFrame) {
@@ -243,7 +241,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 	}
 
 	@Override
-	@Null
+	@Nullable
 	public Texture getTexture () {
 		return texture;
 	}
@@ -276,7 +274,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				Gdx.app.error("gdx-video", "Error closing input stream", e);
+				Log.err("gdx-video", "Error closing input stream", e);
 			}
 			inputStream = null;
 		}
@@ -290,7 +288,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 		if (!paused) {
 			paused = true;
 			if (audio != null) {
-				audio.pause();
+				audio.pause(true);
 			}
 		}
 	}

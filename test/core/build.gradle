@@ -1,9 +1,0 @@
-apply plugin: 'java-library'
-
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-eclipse.project.name = appName + '-core'
-
-dependencies {
-	implementation project(':arc-video-core')
-	api "com.github.Anuken.Arc:arc-core:$arcVersion"
-}

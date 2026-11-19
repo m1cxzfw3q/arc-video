@@ -5,12 +5,13 @@ if (JavaVersion.current().isJava9Compatible()) {
         options.release = 17
     }
 }
-targetCompatibility = JavaVersion.VERSION_17
-sourceCompatibility = JavaVersion.VERSION_17
 
 java {
     withSourcesJar()
     withJavadocJar()
+
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 sourceSets {
@@ -23,5 +24,18 @@ sourceSets {
 
 dependencies {
     api project(":arc-video-desktop")
+
+    //noinspection NewerVersionAvailable
+    compileOnly "org.lwjgl:lwjgl-sdl:3.4.2"
+    //noinspection NewerVersionAvailable
+    compileOnly "org.lwjgl:lwjgl-jemalloc:3.4.2"
+    //noinspection NewerVersionAvailable
+    compileOnly "org.lwjgl:lwjgl-opengl:3.4.2"
+
     api "com.github.Anuken.Arc:backend-sdl3:$arcVersion"
+
+    api "com.badlogicgames.jlayer:jlayer:1.0.1-gdx"
+    api "org.jcraft:jorbis:0.0.17"
+    //noinspection NewerVersionAvailable
+    api "org.lwjgl:lwjgl-openal:3.4.2"
 }

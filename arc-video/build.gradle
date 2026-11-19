@@ -5,12 +5,14 @@ if (JavaVersion.current().isJava9Compatible()) {
         options.release = 17
     }
 }
-targetCompatibility = JavaVersion.VERSION_17
-sourceCompatibility = JavaVersion.VERSION_17
+
 
 java {
     withSourcesJar()
     withJavadocJar()
+
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 sourceSets {
@@ -21,7 +23,7 @@ sourceSets {
     }
 }
 
-archivesBaseName = 'arc-video'
+base { archivesName = 'arc-video' }
 
 dependencies {
     api "com.github.Anuken.Arc:arc-core:$arcVersion"

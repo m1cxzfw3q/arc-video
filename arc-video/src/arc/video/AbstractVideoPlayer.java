@@ -23,8 +23,8 @@ import arc.graphics.Texture.TextureFilter;
 import java.io.FileNotFoundException;
 
 public abstract class AbstractVideoPlayer implements VideoPlayer {
-	protected TextureFilter minFilter = TextureFilter.Linear;
-	protected TextureFilter magFilter = TextureFilter.Linear;
+	protected TextureFilter minFilter = TextureFilter.linear;
+	protected TextureFilter magFilter = TextureFilter.linear;
 
 	@Override
 	public void setFilter (TextureFilter minFilter, TextureFilter magFilter) {

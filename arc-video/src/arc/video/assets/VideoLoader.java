@@ -24,6 +24,7 @@ import arc.assets.loaders.FileHandleResolver;
 import arc.files.Fi;
 import arc.graphics.Texture.TextureFilter;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.video.VideoPlayer;
 import arc.video.VideoPlayerCreator;
 
