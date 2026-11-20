@@ -1,4 +1,3 @@
-
 package arc.backend.sdl.audio;
 
 import arc.ApplicationListener;

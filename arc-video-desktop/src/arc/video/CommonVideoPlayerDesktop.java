@@ -99,12 +99,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 		decoder = new VideoDecoder();
 		VideoDecoderBuffers buffers;
 		try {
-			buffers = decoder.loadStream(new VideoDecoder.VideoFileReader() {
-				@Override
-				public int fillBuffer (ByteBuffer buffer) {
-					return readFileContents(buffer);
-				}
-			});
+			buffers = decoder.loadStream(this::readFileContents);
 
 			if (buffers != null) {
 				ByteBuffer audioBuffer = buffers.getAudioBuffer();
@@ -123,7 +118,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 				return false;
 			}
 		} catch (Exception e) {
-			Log.err("gdx-video", "Error loading video", e);
+			Log.err("arc-video", "Error loading video", e);
 			return false;
 		}
 
@@ -164,8 +159,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 	public boolean update () {
 		if (decoder != null && (!paused || isFirstFrame) && playing) {
 			if (!paused && startTime == 0) {
-				// Since startTime is 0, this means that we should now display the first frame of the video, and set the
-				// time.
+				// Since startTime is 0, this means that we should now display the first frame of the video, and set the time.
 				startTime = System.currentTimeMillis();
 				targetPosition = 0;
 				if (audio != null) {
@@ -274,7 +268,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				Log.err("gdx-video", "Error closing input stream", e);
+				Log.err("arc-video", "Error closing input stream", e);
 			}
 			inputStream = null;
 		}

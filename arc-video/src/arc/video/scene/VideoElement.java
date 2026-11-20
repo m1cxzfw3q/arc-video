@@ -19,6 +19,8 @@ package arc.video.scene;
 import arc.graphics.Color;
 import arc.graphics.Texture;
 import arc.graphics.g2d.Batch;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.TextureRegion;
 import arc.scene.Element;
 import arc.util.ArcRuntimeException;
 import arc.video.VideoPlayer;
@@ -39,6 +41,7 @@ public class VideoElement extends Element {
 	}
 
 	private final VideoPlayer player;
+	private TextureRegion last;
 
 	@Override
 	public void act (float delta) {
@@ -47,12 +50,16 @@ public class VideoElement extends Element {
 	}
 
 	@Override
-	public void draw (Batch batch, float parentAlpha) {
+	public void draw () {
 		Texture texture = player.getTexture();
 		if (texture == null) return;
-		Color color = this.color;
-		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-		batch.draw(texture, x, y, getWidth(), getHeight(), 0, 0, player.getVideoWidth(), player.getVideoHeight());
+		validate();
+		Draw.color(color.r, color.g, color.b, color.a * parentAlpha);
+
+		if(last != null) last.texture.dispose();
+
+		Draw.rect(last = new TextureRegion(texture), x, y, getWidth(), getHeight());
+		Draw.color();
 	}
 
 	public VideoPlayer getVideoPlayer () {

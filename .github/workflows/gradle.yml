@@ -136,7 +136,7 @@ jobs:
         merge-multiple: true
 
     - name: Create JAR with natives for desktop
-      run: ./gradlew jnigenJarNativesDesktop --info
+      run: ./gradlew jnigenPackageAllDesktop --info
 
     - name: Creat android directory
       run: mkdir -p $HOME/.android

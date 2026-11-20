@@ -141,25 +141,19 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 	private void initializeMediaPlayer () {
 		if (handler == null) handler = new Handler(Looper.getMainLooper());
 
-		Core.app.post(new Runnable() {
-			@Override
-			public void run () {
-				textureBuffer = Buffers.newIntBuffer(1);
-				GLES20.glGenTextures(1, textureBuffer);
-				final int textureID = textureBuffer.get(0);
+		Core.app.post(() -> {
+            textureBuffer = Buffers.newIntBuffer(1);
+            GLES20.glGenTextures(1, textureBuffer);
+            final int textureID = textureBuffer.get(0);
 
-				Core.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureID);
+            Core.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureID);
 
-				handler.post(new Runnable() {
-					@Override
-					public void run () {
-						player = new MediaPlayer();
-						videoTexture = new SurfaceTexture(textureID);
-						initialized = true;
-					}
-				});
-			}
-		});
+            handler.post(() -> {
+                player = new MediaPlayer();
+                videoTexture = new SurfaceTexture(textureID);
+                initialized = true;
+            });
+        });
 	}
 
 	private void playInternal (final Fi file) {
@@ -169,13 +163,10 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 
 		// If we haven't finished loading the media player yet, wait without blocking.
 		if (!initialized) {
-			Core.app.post(new Runnable() {
-				@Override
-				public void run () {
-					if (stopped) return;
-					playInternal(file);
-				}
-			});
+			Core.app.post(() -> {
+                if (stopped) return;
+                playInternal(file);
+            });
 			return;
 		}
 
@@ -188,24 +179,21 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 					sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
 				}
 
-				Core.app.post(new Runnable() {
-					@Override
-					public void run () {
-						if (fbo != null && (fbo.getWidth() != player.getVideoWidth() || fbo.getHeight() != player.getVideoHeight())) {
-							fbo.dispose();
-							fbo = null;
-						}
-						if (fbo == null) {
-							fbo = new FrameBuffer(Pixmap.Format.rgb888, player.getVideoWidth(), player.getVideoHeight(), false);
-						}
-						prepared = true;
-						player.setVolume(currentVolume, currentVolume);
-						player.setLooping(currentLooping);
-						if (playRequested) {
-							player.start();
-						}
-					}
-				});
+				Core.app.post(() -> {
+                    if (fbo != null && (fbo.getWidth() != player.getVideoWidth() || fbo.getHeight() != player.getVideoHeight())) {
+                        fbo.dispose();
+                        fbo = null;
+                    }
+                    if (fbo == null) {
+                        fbo = new FrameBuffer(Pixmap.Format.rgb888, player.getVideoWidth(), player.getVideoHeight(), false);
+                    }
+                    prepared = true;
+                    player.setVolume(currentVolume, currentVolume);
+                    player.setLooping(currentLooping);
+                    if (playRequested) {
+                        player.start();
+                    }
+                });
 			}
 		});
 		player.setOnErrorListener(new OnErrorListener() {
@@ -352,13 +340,10 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 	public void dispose () {
 		stop();
 		surface = null;
-		handler.post(new Runnable() {
-			@Override
-			public void run () {
-				player.release();
-				player = null;
-			}
-		});
+		handler.post(() -> {
+            player.release();
+            player = null;
+        });
 
 		if (videoTexture != null) {
 			videoTexture.detachFromGLContext();

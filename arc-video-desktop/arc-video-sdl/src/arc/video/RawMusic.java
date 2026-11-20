@@ -17,9 +17,10 @@
 package arc.video;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
-import arc.Core;
 import arc.audio.Music;
+import arc.audio.Soloud;
 
 /** The RawMusic class extends OpenAlMusic, and retrieves it's audio from a VideoDecoder instance.
  *
@@ -27,14 +28,17 @@ import arc.audio.Music;
 class RawMusic extends Music {
 	VideoDecoder decoder;
 	ByteBuffer backBuffer;
+	static private final int bufferSize = 4096 * 10;
+	static private final byte[] tempBytes = new byte[bufferSize];
+	static private final ByteBuffer tempBuffer = ByteBuffer.allocateDirect(bufferSize).order(ByteOrder.nativeOrder());
 
 	public RawMusic (VideoDecoder decoder, ByteBuffer buffer, int channels, int sampleRate) {
 		this.decoder = decoder;
 		backBuffer = buffer;
 		backBuffer.position(backBuffer.limit());
+
 	}
 
-	@Override
 	public int read (byte[] buffer) {
 		int sizeNeeded = buffer.length;
 		int currentIndex = 0;
@@ -54,10 +58,4 @@ class RawMusic extends Music {
 
 		return buffer.length;
 	}
-
-	@Override
-	public void reset () {
-
-	}
-
 }

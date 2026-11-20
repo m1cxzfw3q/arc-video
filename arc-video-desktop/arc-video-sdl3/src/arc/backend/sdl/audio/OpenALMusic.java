@@ -18,6 +18,7 @@ package arc.backend.sdl.audio;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -38,7 +39,7 @@ public abstract class OpenALMusic extends Music {
 	static private final byte[] tempBytes = new byte[bufferSize];
 	static private final ByteBuffer tempBuffer = BufferUtils.createByteBuffer(bufferSize);
 
-	private FloatSeq renderedSecondsQueue = new FloatSeq(bufferCount);
+	private final FloatSeq renderedSecondsQueue = new FloatSeq(bufferCount);
 
 	private final OpenALSdl3Audio audio;
 	private IntBuffer buffers;
@@ -160,8 +161,7 @@ public abstract class OpenALMusic extends Music {
 		this.pan = pan;
 		if (audio.noDevice) return;
 		if (sourceID == -1) return;
-		alSource3f(sourceID, AL_POSITION, Mathf.cos((pan - 1) * Mathf.halfPi), 0,
-			Mathf.sin((pan + 1) * Mathf.halfPi));
+		alSource3f(sourceID, AL_POSITION, Mathf.cos((pan - 1) * Mathf.halfPi), 0, Mathf.sin((pan + 1) * Mathf.halfPi));
 		alSourcef(sourceID, AL_GAIN, volume);
 	}
 

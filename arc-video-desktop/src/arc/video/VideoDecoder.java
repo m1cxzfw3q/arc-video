@@ -18,7 +18,7 @@ package arc.video;
 
 import java.nio.ByteBuffer;
 
-import com.badlogic.gdx.utils.Disposable;
+import arc.util.Disposable;
 
 /** This class is a java wrapper used on the background, which communicates through jni to the actual video decoder.
  *

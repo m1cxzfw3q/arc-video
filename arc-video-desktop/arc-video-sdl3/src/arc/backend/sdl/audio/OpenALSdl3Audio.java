@@ -60,7 +60,6 @@ public class OpenALSdl3Audio extends Sdl3Audio {
 	private IntMap<Long> sourceToSoundId;
 	private long nextSoundId = 0;
 	private ObjectMap<String, BiFunction<OpenALSdl3Audio, Fi, OpenALMusic>> extensionToMusicClass = new ObjectMap<>();
-	private int mostRecetSound = -1;
 	private String preferredOutputDevice = null;
 	private Thread observerThread;
 

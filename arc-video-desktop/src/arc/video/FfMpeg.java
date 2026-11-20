@@ -23,7 +23,7 @@ import arc.util.SharedLibraryLoader;
  *
  * @author Rob Bogie rob.bogie@codepoke.net */
 public class FfMpeg {
-	public static final String NATIVE_LIBRARY_NAME = "gdx-video-desktop";
+	public static final String NATIVE_LIBRARY_NAME = "arc-video-desktop";
 
 	private static boolean loaded = false;
 	private static String libraryPath;
