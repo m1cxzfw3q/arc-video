@@ -5,13 +5,18 @@ clean.configure {
     dependsOn 'cleanAV1'
 }
 
+interface ExecOperationsProvider {
+    @Inject
+    ExecOperations getExecOperations()
+}
+
 String checkCrossPrefix(String crossToolchain) {
+    def execOperations = objects.newInstance(ExecOperationsProvider).execOperations
     def tc = crossToolchain
     if (tc == null || System.getProperty("os.name").startsWith("Win")) return ""
-    def result = project.exec {
+    def result = execOperations.exec {
         ignoreExitValue = true
-        commandLine "bash", "-l", "-c",
-                "(command -v $tc-g++ && command -v $tc-ar && command -v $tc-ld)>/dev/null"
+        commandLine "bash", "-l", "-c", "(command -v $tc-g++ && command -v $tc-ar && command -v $tc-ld)>/dev/null"
     }
     if (result.getExitValue() == 0) {
         return "$tc-"
@@ -36,6 +41,7 @@ String checkCrossFile(String buildName, String crossToolchain) {
 
 
 void registerBuild(String buildName, String crossToolchain, String... extraArgs) {
+    def execOperations = objects.newInstance(ExecOperationsProvider).execOperations
     String outDir = file("build/${buildName.toLowerCase()}").absolutePath
     String av1Dir = "$outDir/src/dav1d"
     String ffDir = "$outDir/src/FFmpeg"
@@ -69,7 +75,7 @@ void registerBuild(String buildName, String crossToolchain, String... extraArgs)
             if (!crossPath.isEmpty()) {
                 crossArgs = ["--cross-file=$crossPath"]
             }
-            project.exec {
+            execOperations.exec {
                 workingDir av1Dir
                 executable 'meson'
                 args 'setup', '-Denable_tools=false', '-Denable_tests=false'
@@ -78,11 +84,11 @@ void registerBuild(String buildName, String crossToolchain, String... extraArgs)
                 args '--prefix', "$outDir"
                 args "--libdir=$outDir/lib"
             }
-            project.exec {
+            execOperations.exec {
                 workingDir av1Dir
                 commandLine 'ninja'
             }
-            project.exec {
+            execOperations.exec {
                 workingDir av1Dir
                 commandLine 'ninja', 'install'
             }
@@ -105,7 +111,7 @@ void registerBuild(String buildName, String crossToolchain, String... extraArgs)
             if (!crossPrefix.isEmpty()) {
                 crossArgs = ["--enable-cross-compile", "--cross-prefix=$crossPrefix"]
             }
-            project.exec {
+            execOperations.exec {
                 workingDir ffDir
                 environment["PKG_CONFIG_PATH"] = "$outDir/lib/pkgconfig"
                 executable '../../../../src/FFmpeg/configure'
@@ -126,11 +132,11 @@ void registerBuild(String buildName, String crossToolchain, String... extraArgs)
                 //args '--enable-decoder=h264', '--enable-decoder=hevc'
                 args extraArgs
             }
-            project.exec {
+            execOperations.exec {
                 workingDir ffDir
                 commandLine 'make', '-j16'
             }
-            project.exec {
+            execOperations.exec {
                 workingDir ffDir
                 commandLine 'make', 'install'
             }
