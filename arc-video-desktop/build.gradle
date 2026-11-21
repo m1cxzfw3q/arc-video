@@ -35,8 +35,15 @@ apply plugin: "com.badlogicgames.jnigen.jnigen-gradle"
 
 jnigen {
     sharedLibName = "arc-video-desktop"
+    def log = false
     all {
         headerDirs = [file("jni").absolutePath]
+        if(!log){
+            for (var str : headerDirs) {
+                System.out.println(str)
+            }
+            log = true
+        }
         cFlags += " -fvisibility=hidden -v"
         cppFlags += " -fvisibility=hidden -v"
         //Using `-lavcodec -lavformat` order on linux drops filesize by half but mingw wont compile???
