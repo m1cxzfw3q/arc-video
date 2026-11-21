@@ -4,8 +4,6 @@
 
 [![](https://jitpack.io/v/m1cxzfw3q/arc-video.svg)](https://jitpack.io/#m1cxzfw3q/arc-video)
 
-[![Maven Central Version](https://img.shields.io/maven-central/v/com.badlogicgames.gdx-video/gdx-video?label=release)](https://search.maven.org/artifact/com.badlogicgames.gdx-video/gdx-video)
-
 A arc cross-platform video rendering extension
 
 ## Contents
