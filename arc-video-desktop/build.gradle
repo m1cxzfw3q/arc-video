@@ -84,6 +84,7 @@ jnigen {
         cFlags += "-mmacosx-version-min=10.11"
         cppFlags += "-mmacosx-version-min=10.11"
         linkerFlags += "-mmacosx-version-min=10.11"
+        cppIncludes += ["jni/*.c", "jni/*.cpp"]
     }
     addMac(x64, ARM) {
         headerDirs += genHeaders("macosarm64")
@@ -92,6 +93,7 @@ jnigen {
         cFlags += "-mmacosx-version-min=10.11"
         cppFlags += "-mmacosx-version-min=10.11"
         linkerFlags += "-mmacosx-version-min=10.11"
+        cppIncludes += ["jni/*.c", "jni/*.cpp"]
     }
 }
 
