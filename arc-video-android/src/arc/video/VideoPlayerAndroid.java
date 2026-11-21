@@ -139,18 +139,18 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		if (handler == null) handler = new Handler(Looper.getMainLooper());
 
 		Core.app.post( () -> {
-            textureBuffer = Buffers.newIntBuffer(1);
-            GLES20.glGenTextures(1, textureBuffer);
-            final int textureID = textureBuffer.get(0);
+			textureBuffer = Buffers.newIntBuffer(1);
+			GLES20.glGenTextures(1, textureBuffer);
+			final int textureID = textureBuffer.get(0);
 
-            Core.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureID);
+			Core.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureID);
 
-            handler.post( () -> {
+			handler.post( () -> {
                 player = new MediaPlayer();
                 videoTexture = new SurfaceTexture(textureID);
                 initialized = true;
-            });
-        });
+			});
+		});
 	}
 
 	private void playInternal (final Fi file) {
@@ -161,20 +161,20 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		// If we haven't finished loading the media player yet, wait without blocking.
 		if (!initialized) {
 			Core.app.post( () -> {
-                if (stopped) return;
-                playInternal(file);
-            });
+				if (stopped) return;
+				playInternal(file);
+			});
 			return;
 		}
 
 		player.reset();
 
 		player.setOnPreparedListener(mp -> {
-            if (sizeListener != null) {
-                sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
-            }
+			if (sizeListener != null) {
+			sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
+			}
 
-            Core.app.post( () -> {
+			Core.app.post( () -> {
 				if (fbo != null && (fbo.getWidth() != player.getVideoWidth() || fbo.getHeight() != player.getVideoHeight())) {
 					fbo.dispose();
 					fbo = null;
@@ -189,7 +189,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 					player.start();
 				}
 			});
-        });
+		});
 		player.setOnErrorListener(new OnErrorListener() {
 			@SuppressLint("DefaultLocale")
             @Override
@@ -200,11 +200,11 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		});
 
 		player.setOnCompletionListener(mp -> {
-            if (isLooping()) return;
-            if (completionListener != null) {
-                completionListener.onCompletionListener(file);
-            }
-        });
+			if (isLooping()) return;
+			if (completionListener != null) {
+				completionListener.onCompletionListener(file);
+			}
+		});
 
 		try {
 			if (file.type() == FileType.classpath || (file.type() == FileType.internal && !file.file().exists())) {
@@ -332,9 +332,9 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		stop();
 		surface = null;
 		handler.post( () -> {
-            player.release();
-            player = null;
-        });
+			player.release();
+			player = null;
+		});
 
 		if (videoTexture != null) {
 			videoTexture.detachFromGLContext();
