@@ -145,12 +145,12 @@ jobs:
       run: ./gradlew jnigenPackageAllDesktop --info
 
     - name: Snapshot build deploy
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository_owner == 'arc'
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository_owner == 'm1cxzfw3q'
       run: |
         ./gradlew build publish
 
     - name: Import GPG key
-      if: github.event_name == 'release' && github.repository_owner == 'arc'
+      if: github.event_name == 'release' && github.repository_owner == 'm1cxzfw3q'
       id: import_gpg
       uses: crazy-max/ghaction-import-gpg@1c6a9e9d3594f2d743f1b1dd7669ab0dfdffa922
       with:
@@ -158,11 +158,11 @@ jobs:
         passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
     - name: Release build deploy
-      if: github.event_name == 'release' && github.repository_owner == 'arc'
+      if: github.event_name == 'release' && github.repository_owner == 'm1cxzfw3q'
       run: ./gradlew build publish --info -PRELEASE -Psigning.gnupg.keyId=${{ secrets.GPG_KEYID }} -Psigning.gnupg.passphrase=${{ secrets.GPG_PASSPHRASE }} -Psigning.gnupg.keyName=${{ secrets.GPG_KEYID }}
 
     - name: Trigger manual upload to Central Repository
-      if: github.event_name == 'release' && github.repository_owner == 'arc'
+      if: github.event_name == 'release' && github.repository_owner == 'm1cxzfw3q'
       run: |
         curl -X POST \
           -H "Authorization: Bearer $(echo -n '${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }}' | base64)" \
