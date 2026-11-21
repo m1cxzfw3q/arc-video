@@ -55,25 +55,29 @@ import java.nio.IntBuffer;
 public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlayer, OnFrameAvailableListener {
 	//@off
 	static final String vertexShaderCode =
-			"#define highp\n" +
-					"attribute highp vec4 a_position; \n" +
-					"attribute highp vec2 a_texCoord0;" +
-					"uniform highp mat4 u_projModelView;" +
-					"varying highp vec2 v_texCoord0;" +
-					"void main() \n" +
-					"{ \n" +
-					" gl_Position = u_projModelView * a_position; \n" +
-					" v_texCoord0 = a_texCoord0;\n" +
-					"} \n";
+            """
+            #define highp
+            attribute highp vec4 a_position;
+            attribute highp vec2 a_texCoord0;
+            uniform highp mat4 u_projModelView;
+            varying highp vec2 v_texCoord0;
+            void main()
+            {
+              gl_Position = u_projModelView * a_position;
+              v_texCoord0 = a_texCoord0;
+            }
+            """;
 
 	static final String fragmentShaderCode =
-			"#extension GL_OES_EGL_image_external : require\n" +
-					"uniform samplerExternalOES u_sampler0;" +
-					"varying highp vec2 v_texCoord0;" +
-					"void main()                 \n" +
-					"{                           \n" +
-					"  gl_FragColor = texture2D(u_sampler0, v_texCoord0);    \n" +
-					"}";
+            """
+            #extension GL_OES_EGL_image_external : require
+            uniform samplerExternalOES u_sampler0;
+            varying highp vec2 v_texCoord0;
+            void main()
+            {
+              gl_FragColor = texture2D(u_sampler0, v_texCoord0);
+            }
+            """;
 	//@on
 
 	private void setupStep () {
