@@ -78,7 +78,7 @@ jnigen {
     addMac(x64, x86) {
         headerDirs += genHeaders("macos64")
         libraries += genLibs("macos64")
-        libraries += ["-liconv", "-lbz2", "-lz", "-framework CoreFoundation", "-framework CoreVideo", "-framework CoreMedia", "-framework VideoToolbox"]
+        libraries += ["-liconv", "-lbz2", "-lz", "-framework", "CoreFoundation", "-framework", "CoreVideo", "-framework", "CoreMedia", "-framework", "VideoToolbox"]
         cFlags += "-mmacosx-version-min=10.11"
         cppFlags += "-mmacosx-version-min=10.11"
         linkerFlags += "-mmacosx-version-min=10.11"
@@ -86,7 +86,7 @@ jnigen {
     addMac(x64, ARM) {
         headerDirs += genHeaders("macosarm64")
         libraries += genLibs("macosarm64")
-        libraries += ["-liconv", "-lbz2", "-lz", "-framework CoreFoundation", "-framework CoreVideo", "-framework CoreMedia", "-framework VideoToolbox"]
+        libraries += ["-liconv", "-lbz2", "-lz", "-framework", "CoreFoundation", "-framework", "CoreVideo", "-framework", "CoreMedia", "-framework", "VideoToolbox"]
         cFlags += "-mmacosx-version-min=10.11"
         cppFlags += "-mmacosx-version-min=10.11"
         linkerFlags += "-mmacosx-version-min=10.11"
