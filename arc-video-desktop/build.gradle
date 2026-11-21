@@ -38,7 +38,7 @@ jnigen {
     }
     def genLibs = { String buildName ->
         String outPath = file("FFmpeg/build/$buildName").absolutePath
-        return " -L$outPath/lib"
+        return [ "-L$outPath/lib" ]
     }
     def genHeaders = { String buildName ->
         String outPath = file("FFmpeg/build/$buildName").absolutePath
@@ -48,12 +48,14 @@ jnigen {
     addWindows(x32, x86) {
         headerDirs += genHeaders("windows32")
         cppFlags += ["-DWIN32"]
-        libraries += genLibs("windows32") + " -lbcrypt -lws2_32"
+        libraries += genLibs("windows32")
+        libraries += ["-lbcrypt", "-lws2_32"]
     }
     addWindows(x64, x86) {
         headerDirs += genHeaders("windows64")
         cppFlags += ["-DWIN32"]
-        libraries += genLibs("windows64") + " -lbcrypt -lws2_32"
+        libraries += genLibs("windows64")
+        libraries += ["-lbcrypt", "-lws2_32"]
     }
     addLinux(x64, x86) {
         headerDirs += genHeaders("linux64")
@@ -61,31 +63,33 @@ jnigen {
         if(os.name() != "Linux") {
             compilerPrefix = 'x86_64-linux-gnu'
         }
-        linkerFlags += " -Wl,-Bsymbolic "
+        linkerFlags += ["-Wl","-Bsymbolic"]
     }
     addLinux(x32, ARM) {
         headerDirs += genHeaders("linuxarm32")
         libraries += genLibs("linuxarm32")
-        linkerFlags += " -Wl,-Bsymbolic "
+        linkerFlags += ["-Wl","-Bsymbolic"]
     }
     addLinux(x64, ARM) {
         headerDirs += genHeaders("linuxarm64")
         libraries += genLibs("linuxarm64")
-        linkerFlags += " -Wl,-Bsymbolic "
+        linkerFlags += ["-Wl","-Bsymbolic"]
     }
     addMac(x64, x86) {
         headerDirs += genHeaders("macos64")
-        libraries += genLibs("macos64") + " -liconv -lbz2 -lz -framework CoreFoundation -framework CoreVideo -framework CoreMedia -framework VideoToolbox"
-        cFlags += " -mmacosx-version-min=10.11"
-        cppFlags += " -mmacosx-version-min=10.11"
-        linkerFlags += " -mmacosx-version-min=10.11"
+        libraries += genLibs("macos64")
+        libraries += ["-liconv", "-lbz2", "-lz", "-framework CoreFoundation", "-framework CoreVideo", "-framework CoreMedia", "-framework VideoToolbox"]
+        cFlags += ["-mmacosx-version-min=10.11"]
+        cppFlags += ["-mmacosx-version-min=10.11"]
+        linkerFlags += ["-mmacosx-version-min=10.11"]
     }
     addMac(x64, ARM) {
         headerDirs += genHeaders("macosarm64")
-        libraries += genLibs("macosarm64") + " -liconv -lbz2 -lz -framework CoreFoundation -framework CoreVideo -framework CoreMedia -framework VideoToolbox"
-        cFlags += " -mmacosx-version-min=10.11"
-        cppFlags += " -mmacosx-version-min=10.11"
-        linkerFlags += " -mmacosx-version-min=10.11"
+        libraries += genLibs("macosarm64")
+        libraries += ["-liconv", "-lbz2", "-lz", "-framework CoreFoundation", "-framework CoreVideo", "-framework CoreMedia", "-framework VideoToolbox"]
+        cFlags += ["-mmacosx-version-min=10.11"]
+        cppFlags += ["-mmacosx-version-min=10.11"]
+        linkerFlags += ["-mmacosx-version-min=10.11"]
     }
 }
 
