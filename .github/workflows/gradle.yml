@@ -65,11 +65,15 @@ jobs:
       run: |
         ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux --info
 
+    - name: Check output files
+      run: |
+        ls -la ../arc-video-desktop/libs/
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
         name: natives-linux
-        path: arc-video-desktop/libs/**/*.so
+        path: ../arc-video-desktop/libs/**/*.so
         if-no-files-found: error
 
   natives-windows:
