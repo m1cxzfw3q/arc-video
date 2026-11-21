@@ -63,7 +63,7 @@ jobs:
 
     - name: Build natives with Gradle
       run: |
-        ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux --info
+        ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux
 
     - name: Check output files
       run: |
@@ -100,7 +100,7 @@ jobs:
         sudo apt install -y --force-yes mingw-w64 lib32z1
 
     - name: Build natives with Gradle
-      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegWindowsAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllWindows
+      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegWindowsAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllWindows --info
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
