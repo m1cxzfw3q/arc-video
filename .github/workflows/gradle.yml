@@ -63,7 +63,6 @@ jobs:
 
     - name: Build natives with Gradle
       run: |
-        ls -la /home/runner/work/arc-video/arc-video/arc-video-desktop/jni/Utilities.h
         ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux --info
 
     - name: Upload artifacts
