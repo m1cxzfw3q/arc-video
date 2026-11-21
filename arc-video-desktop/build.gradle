@@ -50,14 +50,14 @@ jnigen {
         cppFlags += ["-DWIN32"]
         libraries += genLibs("windows32")
         libraries += ["-lbcrypt", "-lws2_32"]
-        cppIncludes += ["*.*"]
+        cppIncludes += ["jni/*.*"]
     }
     addWindows(x64, x86) {
         headerDirs += genHeaders("windows64")
         cppFlags += ["-DWIN32"]
         libraries += genLibs("windows64")
         libraries += ["-lbcrypt", "-lws2_32"]
-        cppIncludes += ["*.*"]
+        cppIncludes += ["jni/*.*"]
     }
     addLinux(x64, x86) {
         headerDirs += genHeaders("linux64")
