@@ -1,10 +1,12 @@
 # Arc-Video
 
-![GitHub Workflow Status (master)](https://img.shields.io/github/actions/workflow/status/libgdx/gdx-video/publish_snapshot.yml?branch=master)
+![GitHub Workflow Status (master)](https://img.shields.io/github/actions/workflow/status/m1cxzfw3q/arc-video/publish_snapshot.yml?branch=master)
+
+[![](https://jitpack.io/v/m1cxzfw3q/arc-video.svg)](https://jitpack.io/#m1cxzfw3q/arc-video)
 
 [![Maven Central Version](https://img.shields.io/maven-central/v/com.badlogicgames.gdx-video/gdx-video?label=release)](https://search.maven.org/artifact/com.badlogicgames.gdx-video/gdx-video)
 
-A libGDX cross-platform video rendering extension
+A arc cross-platform video rendering extension
 
 ## Contents
 * [Getting Started](#getting-started)
@@ -21,7 +23,7 @@ A libGDX cross-platform video rendering extension
 
 ## Getting Started
 
-Gdx-video is currently available in maven with official builds and snapshot builds. You can find them at the following repositories:
+Arc-video is currently available in maven with official builds and snapshot builds. You can find them at the following repositories:
 
 ### Repositories
 
@@ -31,42 +33,33 @@ Gdx-video is currently available in maven with official builds and snapshot buil
 ### Gradle dependency declarations
 ##### Core:
 ```groovy
-implementation "com.badlogicgames.gdx-video:gdx-video:$gdxVideoVersion"
+implementation "com.github.m1cxzfw3q.arc-video:arc-video:$arcVideoVersion"
+```
+
+```kotlin
+implementation("com.github.m1cxzfw3q.arc-video:arc-video:$arcVideoVersion")
 ```
 
 ##### Desktop:
 ```groovy
-implementation "com.badlogicgames.gdx-video:gdx-video-lwjgl3:$gdxVideoVersion"
+implementation "com.github.m1cxzfw3q.arc-video:arc-video-lwjgl3:$arcVideoVersion"
 // or (when using legacy LWJGL2):
-implementation "com.badlogicgames.gdx-video:gdx-video-lwjgl:$gdxVideoVersion"
+implementation "com.github.m1cxzfw3q.arc-video:arc-video-lwjgl:$arcVideoVersion"
+```
+
+```kotlin
+implementation("com.github.m1cxzfw3q.arc-video:arc-video-lwjgl3:$arcVideoVersion")
+// or (when using legacy LWJGL2):
+implementation("com.github.m1cxzfw3q.arc-video:arc-video-lwjgl:$arcVideoVersion")
 ```
 
 ##### Android:
 ```groovy
-implementation "com.badlogicgames.gdx-video:gdx-video-android:$gdxVideoVersion"
+implementation "com.github.m1cxzfw3q.arc-video:arc-video-android:$arcVideoVersion"
 ```
 
-##### iOS (with RoboVM):
-```groovy
-implementation "com.badlogicgames.gdx-video:gdx-video-robovm:$gdxVideoVersion"
-```
-
-##### Html:
-
-```groovy
-implementation "com.badlogicgames.gdx-video:gdx-video:$gdxVideoVersion:sources"
-implementation "com.badlogicgames.gdx-video:gdx-video-gwt:$gdxVideoVersion"
-implementation "com.badlogicgames.gdx-video:gdx-video-gwt:$gdxVideoVersion:sources"
-```
-You also need to add the following file to your GdxDefinition.gwt.xml in your html project:
-`````xml
-<inherits name="com.badlogic.gdx.video.gdx_video_gwt" />
-`````
-
-##### Teavm:
-
-```groovy
-implementation "com.badlogicgames.gdx-video:gdx-video-teavm:$gdxVideoVersion"
+```kotlin
+implementation("com.github.m1cxzfw3q.arc-video:arc-video-android:$arcVideoVersion")
 ```
 
 ## Playing video
@@ -80,7 +73,7 @@ VideoPlayer player = VideoPlayerCreator.createVideoPlayer();
 Then, load a video from your game's assets.
 
 ```java
-FileHandle file = Gdx.files.internal("video.webm");
+Fi file = Core.files.internal("video.webm");
 player.load(file);
 ```
 
@@ -103,7 +96,7 @@ if (player.isBuffered()) {
 On each frame, call the `update()` function to acquire new video frames
 and keep the decoder running. You may then retrieve the frame using `getTexture()`,
 but note that the texture may be larger than the video itself. The provided
-`VideoActor` takes care of both updating and drawing when using Scene2D.
+`VideoElement` takes care of both updating and drawing when using Scene2D.
 
 Once you are done playing, remember to `dispose()` the video player.
 
@@ -128,10 +121,7 @@ your game on real devices.
 #### Additional notes
 
 **Desktop:** Additional formats and codecs can be enabled when compiling 
-gdx-video yourself. See the file [gdx-video-desktop/FFmpeg/build.gradle](arc-video-desktop/FFmpeg/build.gradle).
-
-**iOS**: H.265 is supported since iOS 11. AV1 requires a current high-end
-device with a hardware decoder.
+arc-video yourself. See the file [arc-video-desktop/FFmpeg/build.gradle](arc-video-desktop/FFmpeg/build.gradle).
 
 **Android**: See the following webpage for officially supported media formats: 
 <https://developer.android.com/guide/topics/media/platform/supported-formats>.
@@ -177,8 +167,8 @@ and perform a gradle sync. If you get any *ZipFile* errors, watch the logs above
 install the remaining Android SDK components through the SDK manager.
 
 When building for desktop, build the native components using the Gradle tasks
-`:gdx-video-desktop:buildFFmpeg{platform}{arch}`
-and `:gdx-video-desktop:jnigenBuild{platform}{arch}`.
+`:arc-video-desktop:buildFFmpeg{platform}{arch}`
+and `:arc-video-desktop:jnigenBuild{platform}{arch}`.
 
 Perform the following command to compile and upload the library in your local repository:
 
