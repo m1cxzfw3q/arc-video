@@ -31,7 +31,7 @@ jnigen {
     sharedLibName = "arc-video-desktop"
     def log = false
     all {
-        headerDirs = [file("jni/").absolutePath]
+        headerDirs = []
         if(!log){
             for (var str : headerDirs) {
                 System.out.println(str)
