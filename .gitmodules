@@ -4,4 +4,5 @@
 	branch = release/4.3
 [submodule "arc-video-desktop/dependencies/dav1d"]
 	path = arc-video-desktop/FFmpeg/src/dav1d
-	url = https://code.videolan.org/videolan/dav1d.git
+	url = https://github.com/videolan/dav1d.git
+	branch = release/1.5.5
