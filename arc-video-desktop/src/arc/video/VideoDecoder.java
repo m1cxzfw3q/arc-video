@@ -215,9 +215,9 @@ public class VideoDecoder implements Disposable {
                 audioBuffer = env->NewDirectByteBuffer(bufferInfo.audioBuffer, bufferInfo.audioBufferSize);
             }
 
-            jclass cls = env->FindClass("com/badlogic/gdx/video/VideoDecoder$VideoDecoderBuffers");
+            jclass cls = env->FindClass("arc/video/VideoDecoder$VideoDecoderBuffers");
             if(cls == NULL) {
-                logError("[wrapped_Java_com_badlogic_gdx_videoVideoDecoder_loadFile] Could not find VideoDecoderBuffers class");
+                logError("[wrapped_Java_arc_videoVideoDecoder_loadFile] Could not find VideoDecoderBuffers class");
                 return NULL;
             }
             jmethodID constructor = env->GetMethodID(cls, "<init>", "(Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;IIIII)V");
