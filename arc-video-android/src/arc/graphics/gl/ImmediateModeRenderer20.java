@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2011 See AUTHORS file.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -177,8 +177,7 @@ public class ImmediateModeRenderer20 implements ImmediateModeRenderer {
 			shader.append("attribute vec2 " + Shader.texcoordAttribute).append(i).append(";\n");
 		}
 
-		shader.append("uniform mat4 u_projModelView;\n" //
-        ).append(hasColors ? "varying vec4 v_col;\n" : "");
+		shader.append("uniform mat4 u_projModelView;\n").append(hasColors ? "varying vec4 v_col;\n" : "");
 
 		for (int i = 0; i < numTexCoords; i++) {
 			shader.append("varying vec2 v_tex").append(i).append(";\n");
@@ -186,15 +185,13 @@ public class ImmediateModeRenderer20 implements ImmediateModeRenderer {
 
 		shader.append("void main() {\n" + "   gl_Position = u_projModelView * " + Shader.positionAttribute + ";\n");
 		if (hasColors) {
-			shader.append("   v_col = " + Shader.colorAttribute + ";\n" //
-                    + "   v_col.a *= 255.0 / 254.0;\n");
+			shader.append("   v_col = " + Shader.colorAttribute + ";\n   v_col.a *= 255.0 / 254.0;\n");
 		}
 
 		for (int i = 0; i < numTexCoords; i++) {
 			shader.append("   v_tex").append(i).append(" = ").append(Shader.texcoordAttribute).append(i).append(";\n");
 		}
-		shader.append("   gl_PointSize = 1.0;\n" //
-                + "}\n");
+		shader.append("   gl_PointSize = 1.0;\n}\n");
 		return shader.toString();
 	}
 
@@ -207,8 +204,7 @@ public class ImmediateModeRenderer20 implements ImmediateModeRenderer {
 			shader.append("uniform sampler2D u_sampler").append(i).append(";\n");
 		}
 
-		shader.append("void main() {\n" //
-                + "   gl_FragColor = ").append(hasColors ? "v_col" : "vec4(1, 1, 1, 1)");
+		shader.append("void main() {\n   gl_FragColor = ").append(hasColors ? "v_col" : "vec4(1, 1, 1, 1)");
 
 		if (numTexCoords > 0) shader.append(" * ");
 
