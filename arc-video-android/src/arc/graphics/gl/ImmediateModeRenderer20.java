@@ -169,9 +169,9 @@ public class ImmediateModeRenderer20 implements ImmediateModeRenderer {
 	}
 
 	static private String createVertexShader (boolean hasNormals, boolean hasColors, int numTexCoords) {
-		StringBuilder shader = new StringBuilder("attribute vec4 " + Shader.positionAttribute + ";\n"
-                + (hasNormals ? "attribute vec3 " + Shader.normalAttribute + ";\n" : "")
-                + (hasColors ? "attribute vec4 " + Shader.colorAttribute + ";\n" : ""));
+		StringBuilder shader = new StringBuilder("attribute vec4 " + Shader.positionAttribute + ";\n");
+		shader.append(hasNormals ? "attribute vec3 " + Shader.normalAttribute + ";\n" : "");
+		shader.append(hasColors ? "attribute vec4 " + Shader.colorAttribute + ";\n" : "");
 
 		for (int i = 0; i < numTexCoords; i++) {
 			shader.append("attribute vec2 " + Shader.texcoordAttribute).append(i).append(";\n");
