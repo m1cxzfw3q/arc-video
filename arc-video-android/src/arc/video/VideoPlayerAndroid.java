@@ -417,5 +417,4 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		}
 		return player.getCurrentPosition();
 	}
-
 }
