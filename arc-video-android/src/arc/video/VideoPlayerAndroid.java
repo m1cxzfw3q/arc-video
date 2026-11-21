@@ -146,9 +146,9 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 			Core.gl.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureID);
 
 			handler.post( () -> {
-                player = new MediaPlayer();
-                videoTexture = new SurfaceTexture(textureID);
-                initialized = true;
+				player = new MediaPlayer();
+				videoTexture = new SurfaceTexture(textureID);
+				initialized = true;
 			});
 		});
 	}
@@ -171,7 +171,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 
 		player.setOnPreparedListener(mp -> {
 			if (sizeListener != null) {
-			sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
+				sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
 			}
 
 			Core.app.post( () -> {
@@ -192,7 +192,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 		});
 		player.setOnErrorListener(new OnErrorListener() {
 			@SuppressLint("DefaultLocale")
-            @Override
+			@Override
 			public boolean onError (MediaPlayer mp, int what, int extra) {
 				Log.err("arc-video", String.format("Error occurred: %d, %d\n", what, extra));
 				return false;
