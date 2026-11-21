@@ -62,7 +62,9 @@ jobs:
         sudo apt install -y --force-yes gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf libc6-dev-armhf-cross
 
     - name: Build natives with Gradle
-      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux --info
+      run: |
+        ls -la /home/runner/work/arc-video/arc-video/arc-video-desktop/jni/Utilities.h
+        ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux --info
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
