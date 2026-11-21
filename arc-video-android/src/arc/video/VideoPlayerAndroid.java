@@ -98,12 +98,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 	}
 
 	private void queueSetupStep () {
-		Core.app.post(new Runnable() {
-			@Override
-			public void run () {
-				setupStep();
-			}
-		});
+		Core.app.post(this::setupStep);
 	}
 
 	private Shader shader;
@@ -172,30 +167,27 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 
 		player.reset();
 
-		player.setOnPreparedListener(new OnPreparedListener() {
-			@Override
-			public void onPrepared (MediaPlayer mp) {
-				if (sizeListener != null) {
-					sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
-				}
+		player.setOnPreparedListener(mp -> {
+            if (sizeListener != null) {
+                sizeListener.onVideoSize(mp.getVideoWidth(), mp.getVideoHeight());
+            }
 
-				Core.app.post(() -> {
-                    if (fbo != null && (fbo.getWidth() != player.getVideoWidth() || fbo.getHeight() != player.getVideoHeight())) {
-                        fbo.dispose();
-                        fbo = null;
-                    }
-                    if (fbo == null) {
-                        fbo = new FrameBuffer(Pixmap.Format.rgb888, player.getVideoWidth(), player.getVideoHeight(), false);
-                    }
-                    prepared = true;
-                    player.setVolume(currentVolume, currentVolume);
-                    player.setLooping(currentLooping);
-                    if (playRequested) {
-                        player.start();
-                    }
-                });
-			}
-		});
+            Core.app.post(() -> {
+				if (fbo != null && (fbo.getWidth() != player.getVideoWidth() || fbo.getHeight() != player.getVideoHeight())) {
+					fbo.dispose();
+					fbo = null;
+				}
+				if (fbo == null) {
+					fbo = new FrameBuffer(Pixmap.Format.rgb888, player.getVideoWidth(), player.getVideoHeight(), false);
+				}
+				prepared = true;
+				player.setVolume(currentVolume, currentVolume);
+				player.setLooping(currentLooping);
+				if (playRequested) {
+					player.start();
+				}
+			});
+        });
 		player.setOnErrorListener(new OnErrorListener() {
 			@SuppressLint("DefaultLocale")
             @Override
@@ -205,15 +197,12 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 			}
 		});
 
-		player.setOnCompletionListener(new OnCompletionListener() {
-			@Override
-			public void onCompletion (MediaPlayer mp) {
-				if (isLooping()) return;
-				if (completionListener != null) {
-					completionListener.onCompletionListener(file);
-				}
-			}
-		});
+		player.setOnCompletionListener(mp -> {
+            if (isLooping()) return;
+            if (completionListener != null) {
+                completionListener.onCompletionListener(file);
+            }
+        });
 
 		try {
 			if (file.type() == FileType.classpath || (file.type() == FileType.internal && !file.file().exists())) {
