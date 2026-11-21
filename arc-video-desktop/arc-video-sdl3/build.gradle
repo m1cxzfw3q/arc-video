@@ -14,13 +14,7 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ["src/"]
-        }
-    }
-}
+sourceSets.main.java.srcDirs = ["src/"]
 
 dependencies {
     api project(":arc-video-desktop")
