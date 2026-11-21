@@ -68,28 +68,28 @@ jnigen {
     addLinux(x32, ARM) {
         headerDirs += genHeaders("linuxarm32")
         libraries += genLibs("linuxarm32")
-        linkerFlags += ["-Wl","-Bsymbolic"]
+        linkerFlags += ["-Wl", "-Bsymbolic"]
     }
     addLinux(x64, ARM) {
         headerDirs += genHeaders("linuxarm64")
         libraries += genLibs("linuxarm64")
-        linkerFlags += ["-Wl","-Bsymbolic"]
+        linkerFlags += ["-Wl", "-Bsymbolic"]
     }
     addMac(x64, x86) {
         headerDirs += genHeaders("macos64")
         libraries += genLibs("macos64")
         libraries += ["-liconv", "-lbz2", "-lz", "-framework CoreFoundation", "-framework CoreVideo", "-framework CoreMedia", "-framework VideoToolbox"]
-        cFlags += ["-mmacosx-version-min=10.11"]
-        cppFlags += ["-mmacosx-version-min=10.11"]
-        linkerFlags += ["-mmacosx-version-min=10.11"]
+        cFlags += "-mmacosx-version-min=10.11"
+        cppFlags += "-mmacosx-version-min=10.11"
+        linkerFlags += "-mmacosx-version-min=10.11"
     }
     addMac(x64, ARM) {
         headerDirs += genHeaders("macosarm64")
         libraries += genLibs("macosarm64")
         libraries += ["-liconv", "-lbz2", "-lz", "-framework CoreFoundation", "-framework CoreVideo", "-framework CoreMedia", "-framework VideoToolbox"]
-        cFlags += ["-mmacosx-version-min=10.11"]
-        cppFlags += ["-mmacosx-version-min=10.11"]
-        linkerFlags += ["-mmacosx-version-min=10.11"]
+        cFlags += "-mmacosx-version-min=10.11"
+        cppFlags += "-mmacosx-version-min=10.11"
+        linkerFlags += "-mmacosx-version-min=10.11"
     }
 }
 
