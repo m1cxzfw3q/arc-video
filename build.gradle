@@ -1,4 +1,4 @@
-import com.diffplug.spotless.LineEnding
+//import com.diffplug.spotless.LineEnding
 
 buildscript {
     repositories {
@@ -85,13 +85,15 @@ allprojects {
 }
 
 subprojects {
+    apply plugin: "java-library"
+/*
     apply plugin: "com.diffplug.spotless"
 
     spotless {
         lineEndings LineEnding.UNIX
 
         java {
-            target 'src/**/*.java'
+            target 'src/**\/*.java'
             licenseHeader '/*******************************************************************************\n' +
                     ' * Copyright $YEAR See AUTHORS file.\n' +
                     ' *\n' +
@@ -106,11 +108,13 @@ subprojects {
                     ' * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n' +
                     ' * See the License for the specific language governing permissions and\n' +
                     ' * limitations under the License.\n' +
-                    ' ******************************************************************************/\n'
+                    ' ******************************************************************************\/\n'
             removeUnusedImports()
             eclipse().configFile new File(rootProject.projectDir.absolutePath, 'eclipse-formatter.xml')
         }
     }
+
+ */
 }
 
 apply from : 'publish.gradle'
