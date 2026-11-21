@@ -35,6 +35,7 @@ jnigen {
         cppFlags += ["-fvisibility=hidden", "-I${file("jni").absolutePath}"]
         //Using `-lavcodec -lavformat` order on linux drops filesize by half but mingw wont compile???
         libraries += ["-lavformat", "-lavcodec", "-lavutil", "-lswscale", "-lswresample", "-lpthread", "-ldav1d"]
+        cppIncludes += ["*.*"]
     }
     def genLibs = { String buildName ->
         String outPath = file("FFmpeg/build/$buildName").absolutePath
