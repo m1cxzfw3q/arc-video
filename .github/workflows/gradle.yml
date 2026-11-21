@@ -69,7 +69,7 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: natives-linux
-        path: ../arc-video-desktop/build/jnigen/libs/**/*.so
+        path: arc-video-desktop/build/jnigen/libs/**/*.so
         if-no-files-found: error
 
   natives-windows:
