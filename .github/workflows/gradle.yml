@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: natives-macos
-        path: arc-video-desktop/libs/**/*.dylib
+        path: arc-video-desktop/build/jnigen/libs/**/*.dylib
         if-no-files-found: error
 
   natives-linux:
@@ -65,15 +65,11 @@ jobs:
       run: |
         ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux
 
-    - name: Check output files
-      run: |
-        ls -la /home/runner/work/arc-video/arc-video/arc-video-desktop/libs/
-
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
         name: natives-linux
-        path: ../arc-video-desktop/libs/**/*.so
+        path: ../arc-video-desktop/build/jnigen/libs/**/*.so
         if-no-files-found: error
 
   natives-windows:
@@ -106,7 +102,7 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: natives-windows
-        path: arc-video-desktop/libs/**/*.dll
+        path: arc-video-desktop/build/jnigen/libs/**/*.dll
         if-no-files-found: error
 
   gradle-build:
