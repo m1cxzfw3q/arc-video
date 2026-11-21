@@ -30,7 +30,7 @@ jobs:
       run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegMacosAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllMacOsX
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: natives-macos
         path: arc-video-desktop/libs/**/*.dylib
@@ -66,7 +66,7 @@ jobs:
         ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux --info
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: natives-linux
         path: arc-video-desktop/libs/**/*.so
@@ -99,7 +99,7 @@ jobs:
       run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegWindowsAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllWindows
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: natives-windows
         path: arc-video-desktop/libs/**/*.dll
@@ -150,7 +150,7 @@ jobs:
 
     - name: Upload all output libs
       if: ${{ always() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: output-libs
         path: '**/build/libs/'
