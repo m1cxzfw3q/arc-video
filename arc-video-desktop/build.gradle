@@ -31,8 +31,8 @@ jnigen {
     sharedLibName = "arc-video-desktop"
     all {
         headerDirs = []
-        cFlags += " -fvisibility=hidden -I${file('jni').absolutePath} "
-        cppFlags += " -fvisibility=hidden -I${file('jni').absolutePath} "
+        cFlags += " -fvisibility=hidden "
+        cppFlags += " -fvisibility=hidden "
         //Using `-lavcodec -lavformat` order on linux drops filesize by half but mingw wont compile???
         libraries += " -lavformat -lavcodec -lavutil -lswscale -lswresample -lpthread -ldav1d"
     }

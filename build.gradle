@@ -7,7 +7,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath "com.badlogicgames.jnigen:jnigen-gradle:3.1.2"
+        classpath "com.badlogicgames.jnigen:jnigen-gradle:3.1.3"
     }
 }
 
