@@ -36,10 +36,10 @@ jobs:
       run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegMacosAll :arc-video-desktop:jnigenBuildAllMacOsX
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: natives-macos
-        path: arc-video-desktop/libs/**/*.dylib
+        path: arc-video-desktop/build/jnigen/libs/**/*.dylib
         if-no-files-found: error
 
   natives-linux:
@@ -71,10 +71,10 @@ jobs:
       run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigenBuildAllLinux
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: natives-linux
-        path: arc-video-desktop/libs/**/*.so
+        path: arc-video-desktop/build/jnigen/libs/**/*.so
         if-no-files-found: error
 
   natives-windows:
@@ -104,10 +104,10 @@ jobs:
       run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegWindowsAll :arc-video-desktop:jnigenBuildAllWindows
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: natives-windows
-        path: arc-video-desktop/libs/**/*.dll
+        path: arc-video-desktop/build/jnigen/libs/**/*.dll
         if-no-files-found: error
 
   publish:
@@ -120,7 +120,7 @@ jobs:
         ORG_GRADLE_PROJECT_NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
         ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0
         submodules: 'recursive'
@@ -142,7 +142,7 @@ jobs:
         merge-multiple: true
 
     - name: Create JAR with natives for desktop
-      run: ./gradlew jnigenJarNativesDesktop --info
+      run: ./gradlew jnigenPackageAllDesktop --info
 
     - name: Snapshot build deploy
       if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository_owner == 'arc'
