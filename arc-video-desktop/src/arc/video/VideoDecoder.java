@@ -222,14 +222,14 @@ public class VideoDecoder implements Disposable {
             }
             jmethodID constructor = env->GetMethodID(cls, "<init>", "(Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;IIIII)V");
             return env->NewObject(cls, constructor, videoBuffer, audioBuffer, bufferInfo.videoBufferWidth, bufferInfo.videoWidth, bufferInfo.videoHeight, bufferInfo.audioChannels, bufferInfo.audioSampleRate);
-		} catch(std::runtime_error e) {
+		} catch(const std::runtime_error& e) {
 			logDebug("Caught exception \n");
 			jclass clazz = env->FindClass("java/lang/Exception");
 			if(clazz == 0) { //Something went horribly wrong here...
 				return 0;
 			}
 			env->ThrowNew(clazz, e.what());
-		} catch(std::invalid_argument e) {
+		} catch(const std::invalid_argument& e) {
 			jclass clazz = env->FindClass("java/lang/IllegalArgumentException");
 			if(clazz == 0) { //Something went horribly wrong here...
 				return 0;
