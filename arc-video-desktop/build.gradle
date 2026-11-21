@@ -35,7 +35,6 @@ jnigen {
         cppFlags += ["-fvisibility=hidden", "-I${file("jni").absolutePath}"]
         //Using `-lavcodec -lavformat` order on linux drops filesize by half but mingw wont compile???
         libraries += ["-lavformat", "-lavcodec", "-lavutil", "-lswscale", "-lswresample", "-lpthread", "-ldav1d"]
-        cppIncludes += ["jni/*.c", "jni/*.cpp"]
     }
     def genLibs = { String buildName ->
         String outPath = file("FFmpeg/build/$buildName").absolutePath
@@ -51,12 +50,14 @@ jnigen {
         cppFlags += ["-DWIN32"]
         libraries += genLibs("windows32")
         libraries += ["-lbcrypt", "-lws2_32"]
+        cppIncludes += ["jni/*.c", "jni/*.cpp"]
     }
     addWindows(x64, x86) {
         headerDirs += genHeaders("windows64")
         cppFlags += ["-DWIN32"]
         libraries += genLibs("windows64")
         libraries += ["-lbcrypt", "-lws2_32"]
+        cppIncludes += ["jni/*.c", "jni/*.cpp"]
     }
     addLinux(x64, x86) {
         headerDirs += genHeaders("linux64")
@@ -65,19 +66,16 @@ jnigen {
             compilerPrefix = 'x86_64-linux-gnu'
         }
         linkerFlags += ["-Wl,-Bsymbolic"]
-        cppIncludes = []
     }
     addLinux(x32, ARM) {
         headerDirs += genHeaders("linuxarm32")
         libraries += genLibs("linuxarm32")
         linkerFlags += ["-Wl,-Bsymbolic"]
-        cppIncludes = []
     }
     addLinux(x64, ARM) {
         headerDirs += genHeaders("linuxarm64")
         libraries += genLibs("linuxarm64")
         linkerFlags += ["-Wl,-Bsymbolic"]
-        cppIncludes = []
     }
     addMac(x64, x86) {
         headerDirs += genHeaders("macos64")
@@ -86,6 +84,7 @@ jnigen {
         cFlags += "-mmacosx-version-min=10.11"
         cppFlags += "-mmacosx-version-min=10.11"
         linkerFlags += "-mmacosx-version-min=10.11"
+        cppIncludes += ["jni/*.c", "jni/*.cpp"]
     }
     addMac(x64, ARM) {
         headerDirs += genHeaders("macosarm64")
@@ -94,6 +93,7 @@ jnigen {
         cFlags += "-mmacosx-version-min=10.11"
         cppFlags += "-mmacosx-version-min=10.11"
         linkerFlags += "-mmacosx-version-min=10.11"
+        cppIncludes += ["jni/*.c", "jni/*.cpp"]
     }
 }
 
