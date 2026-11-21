@@ -32,8 +32,7 @@ jnigen {
     all {
         headerDirs = []
         cFlags += "-fvisibility=hidden"
-        cppFlags += "-fvisibility=hidden"
-        cppFlags += "-I/this/path/definitely/does/not/exist"
+        cppFlags += ["-fvisibility=hidden", "-I/this/path/definitely/does/not/exist"]
         //Using `-lavcodec -lavformat` order on linux drops filesize by half but mingw wont compile???
         libraries += " -lavformat -lavcodec -lavutil -lswscale -lswresample -lpthread -ldav1d"
     }
@@ -48,12 +47,12 @@ jnigen {
 
     addWindows(x32, x86) {
         headerDirs += genHeaders("windows32")
-        cppFlags += "-DWIN32"
+        cppFlags += ["-DWIN32"]
         libraries += genLibs("windows32") + " -lbcrypt -lws2_32"
     }
     addWindows(x64, x86) {
         headerDirs += genHeaders("windows64")
-        cppFlags += "-DWIN32"
+        cppFlags += ["-DWIN32"]
         libraries += genLibs("windows64") + " -lbcrypt -lws2_32"
     }
     addLinux(x64, x86) {
