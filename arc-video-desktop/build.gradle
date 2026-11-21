@@ -63,17 +63,17 @@ jnigen {
         if(os.name() != "Linux") {
             compilerPrefix = 'x86_64-linux-gnu'
         }
-        linkerFlags += ["-Wl","-Bsymbolic"]
+        linkerFlags += ["-Wl,-Bsymbolic"]
     }
     addLinux(x32, ARM) {
         headerDirs += genHeaders("linuxarm32")
         libraries += genLibs("linuxarm32")
-        linkerFlags += ["-Wl", "-Bsymbolic"]
+        linkerFlags += ["-Wl,-Bsymbolic"]
     }
     addLinux(x64, ARM) {
         headerDirs += genHeaders("linuxarm64")
         libraries += genLibs("linuxarm64")
-        linkerFlags += ["-Wl", "-Bsymbolic"]
+        linkerFlags += ["-Wl,-Bsymbolic"]
     }
     addMac(x64, x86) {
         headerDirs += genHeaders("macos64")
