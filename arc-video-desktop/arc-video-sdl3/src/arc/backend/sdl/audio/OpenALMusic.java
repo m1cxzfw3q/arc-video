@@ -211,7 +211,7 @@ public abstract class OpenALMusic extends Music {
 		return renderedSeconds + alGetSourcef(sourceID, AL11.AL_SEC_OFFSET);
 	}
 
-	/** Fills as much of the buffer as possible and returns the number of bytes filled. Returns <= 0 to indicate the end of the
+	/** Fills as much of the buffer as possible and returns the number of bytes filled. Returns ≤ 0 to indicate the end of the
 	 * stream. */
 	abstract public int read (byte[] buffer);
 
