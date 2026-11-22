@@ -78,21 +78,22 @@ public class FfMpeg {
 		setDebugLoggingNative(debugLogging);
 	}
 
-	/*
-	 * Native functions
-	 * @off
-	 */
+/*
+ * Native functions
+ * @off
+ */
 
-	/*JNI
-		#include "Utilities.h"
-	 */
+/*JNI
 
-	 /**
-	  * This function can be used to turn on/off debug logging of the native code
-	  *
-	  * @param debugLogging whether logging should be turned on or off
-	  */
-	 private native static void setDebugLoggingNative (boolean debugLogging);/*
-		debug(debugLogging);
-	 */
+#include "Utilities.h"
+*/
+
+/**
+ * This function can be used to turn on/off debug logging of the native code
+ *
+ * @param debugLogging whether logging should be turned on or off
+ */
+private native static void setDebugLoggingNative (boolean debugLogging);/*
+	debug(debugLogging);
+*/
 }
