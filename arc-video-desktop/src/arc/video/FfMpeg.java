@@ -16,7 +16,7 @@
 
 package arc.video;
 
-import arc.util.SharedLibraryLoader;
+import arc.util.AdvanceSharedLibraryLoader;
 
 /** This class manages the loading of the native libraries that wrap FFMpeg. It allows changing the path from which it loads the
  * libraries, and defaults to loading the file from jar containing the class.
@@ -44,11 +44,11 @@ public class FfMpeg {
 			return true;
 		}
 
-		SharedLibraryLoader libLoader;
+		AdvanceSharedLibraryLoader libLoader;
 		if (libraryPath == null) {
-			libLoader = new SharedLibraryLoader();
+			libLoader = new AdvanceSharedLibraryLoader();
 		} else {
-			libLoader = new SharedLibraryLoader(libraryPath);
+			libLoader = new AdvanceSharedLibraryLoader(libraryPath);
 		}
 
 		try {

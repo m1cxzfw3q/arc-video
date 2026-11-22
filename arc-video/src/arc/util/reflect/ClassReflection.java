@@ -36,4 +36,19 @@ public final class ClassReflection {
 			throw new ReflectionException("Could not instantiate instance of class: " + c.getName(), e);
 		}
     }
+
+	public static Class getClassCaller(ClassLoader loader) {
+		Thread thread = Thread.currentThread();
+		StackTraceElement[] trace = thread.getStackTrace();
+
+		try {
+			return Class.forName(trace[3].getClassName(), true, loader);
+		} catch (ClassNotFoundException var3) {
+			return null;
+		}
+	}
+
+	public static Class getClassCaller() {
+		return getClassCaller(ClassReflection.class.getClassLoader());
+	}
 }
