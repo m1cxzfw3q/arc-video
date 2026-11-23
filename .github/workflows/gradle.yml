@@ -9,148 +9,148 @@ jobs:
   natives-macos:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-        submodules: 'recursive'
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-    - name: Install additional build dependencies
-      run: brew install nasm meson
+      - name: Install additional build dependencies
+        run: brew install nasm meson
 
-    - name: Build with Gradle
-      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegMacosAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllMacOsX
+      - name: Build with Gradle
+        run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegMacosAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllMacOsX
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v7
-      with:
-        name: natives-macos
-        path: arc-video-desktop/build/jnigen/libs/**/*.dylib
-        if-no-files-found: error
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: natives-macos
+          path: arc-video-desktop/build/jnigen/libs/**/*.dylib
+          if-no-files-found: error
 
   natives-linux:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-        submodules: 'recursive'
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-    - name: Install build dependencies and cross-compilation toolchains
-      run: |
-        sudo apt update
-        sudo apt install -y --force-yes gcc g++
-        sudo apt install -y --force-yes nasm meson
-        sudo apt install -y --force-yes gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross
-        sudo apt install -y --force-yes gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf libc6-dev-armhf-cross
+      - name: Install build dependencies and cross-compilation toolchains
+        run: |
+          sudo apt update
+          sudo apt install -y --force-yes gcc g++
+          sudo apt install -y --force-yes nasm meson
+          sudo apt install -y --force-yes gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross
+          sudo apt install -y --force-yes gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf libc6-dev-armhf-cross
 
-    - name: Build natives with Gradle
-      run: |
-        ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux
+      - name: Build natives with Gradle
+        run: |
+          ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegLinuxAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllLinux
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v7
-      with:
-        name: natives-linux
-        path: arc-video-desktop/build/jnigen/libs/**/*.so
-        if-no-files-found: error
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: natives-linux
+          path: arc-video-desktop/build/jnigen/libs/**/*.so
+          if-no-files-found: error
 
   natives-windows:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-        submodules: 'recursive'
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-    - name: Install build dependencies and cross-compilation toolchains
-      run: |
-        sudo apt update
-        sudo apt install -y --force-yes nasm meson
-        sudo apt install -y --force-yes mingw-w64 lib32z1
+      - name: Install build dependencies and cross-compilation toolchains
+        run: |
+          sudo apt update
+          sudo apt install -y --force-yes nasm meson
+          sudo apt install -y --force-yes mingw-w64 lib32z1
 
-    - name: Build natives with Gradle
-      run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegWindowsAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllWindows --info
+      - name: Build natives with Gradle
+        run: ./gradlew :arc-video-desktop:FFmpeg:buildFFmpegWindowsAll :arc-video-desktop:jnigen :arc-video-desktop:jnigenBuildAllWindows --info
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v7
-      with:
-        name: natives-windows
-        path: arc-video-desktop/build/jnigen/libs/**/*.dll
-        if-no-files-found: error
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: natives-windows
+          path: arc-video-desktop/build/jnigen/libs/**/*.dll
+          if-no-files-found: error
 
   gradle-build:
     needs:
-    - natives-macos
-    - natives-linux
-    - natives-windows
+      - natives-macos
+      - natives-linux
+      - natives-windows
     runs-on: ubuntu-22.04
     env:
       ORG_GRADLE_PROJECT_GITHUB_USERNAME: ""
       ORG_GRADLE_PROJECT_GITHUB_API_TOKEN: ""
     steps:
-    - uses: actions/checkout@v6
-      with:
-        fetch-depth: 0
-        submodules: 'recursive'
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-    - name: Download individual natives artifacts
-      uses: actions/download-artifact@v4
-      with:
-        pattern: natives-*
-        path: arc-video-desktop/libs
-        merge-multiple: true
+      - name: Download individual natives artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: natives-*
+          path: arc-video-desktop/libs
+          merge-multiple: true
 
-    - name: Create JAR with natives for desktop
-      run: ./gradlew jnigenPackageAllDesktop --info
+      - name: Create JAR with natives for desktop
+        run: ./gradlew jnigenPackageAllDesktop --info
 
-    - name: Creat android directory
-      run: mkdir -p $HOME/.android
+      - name: Creat android directory
+        run: mkdir -p $HOME/.android
 
-    - name: Create debug keystore for android
-      run: keytool -genkey -v -keystore $HOME/.android/debug.keystore -storetype PKCS12 -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -noprompt -dname "CN=ArcVideo, OU=Arc, O=Arc, L=Unknown, ST=Unknown, C=US"
+      - name: Create debug keystore for android
+        run: keytool -genkey -v -keystore $HOME/.android/debug.keystore -storetype PKCS12 -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -noprompt -dname "CN=ArcVideo, OU=Arc, O=Arc, L=Unknown, ST=Unknown, C=US"
 
-    - name: Build library and test programs with gradle
-      run: ./gradlew build
+      - name: Build library and test programs with gradle
+        run: ./gradlew build
 
-    - name: Upload all output libs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v7
-      with:
-        name: output-libs
-        path: '**/build/libs/'
+      - name: Upload all output libs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: output-libs
+          path: '**/build/libs/'

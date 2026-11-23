@@ -5,16 +5,14 @@ import arc.util.reflect.ClassReflection;
 import java.io.File;
 
 public class AdvanceSharedLibraryLoader extends SharedLibraryLoader {
-    private final Class calledClass;
+    private final Class calledClass = ClassReflection.getClassCaller();;
     private final Object[] input = {};
 
     public AdvanceSharedLibraryLoader() {
-        calledClass = ClassReflection.getClassCaller();
     }
 
     public AdvanceSharedLibraryLoader(String nativesJar) {
         super(nativesJar);
-        calledClass = ClassReflection.getClassCaller();
     }
 
     public Class calledClass() {
@@ -29,7 +27,7 @@ public class AdvanceSharedLibraryLoader extends SharedLibraryLoader {
 
                     try {
                         if (OS.isAndroid) {
-                            System.loadLibrary(platformName);
+                            // System.loadLibrary(platformName)
                             // Runtime.getRuntime().loadLibrary0(calledClass, platformName);
                             input[0] = calledClass; input[1] = platformName;
                             Reflect.invoke(Runtime.getRuntime(), "loadLibrary0", input, Class.class, String.class);
@@ -68,7 +66,10 @@ public class AdvanceSharedLibraryLoader extends SharedLibraryLoader {
                     if (this.loadFile(sourcePath, sourceCrc, file) != null) {
                         file = new File(System.getProperty("java.library.path"), sourcePath);
                         if (file.exists()) {
-                            System.load(file.getAbsolutePath());
+                            // System.load(file.getAbsolutePath())
+                            // Runtime.getRuntime().load0(Reflection.getCallerClass(), filename);
+                            input[0] = calledClass; input[1] = file.getAbsolutePath();
+                            Reflect.invoke(Runtime.getRuntime(), "load0", input, Class.class, String.class);
                         } else {
                             throw new ArcRuntimeException(result);
                         }
