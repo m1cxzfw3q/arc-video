@@ -6,7 +6,7 @@ import java.io.File;
 
 public class AdvanceSharedLibraryLoader extends SharedLibraryLoader {
     private final Class calledClass = ClassReflection.getClassCaller();;
-    private final Object[] input = {};
+    private final Object[] input = new Object[2];
 
     public AdvanceSharedLibraryLoader() {
     }
