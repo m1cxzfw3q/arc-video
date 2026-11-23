@@ -73,7 +73,6 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 
 	@Override
 	public boolean load (Fi file) throws FileNotFoundException {
-		VideoDecoder.ping();
 		if (file == null) {
 			return false;
 		}

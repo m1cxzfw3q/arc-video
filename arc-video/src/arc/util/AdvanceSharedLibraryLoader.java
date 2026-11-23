@@ -28,7 +28,6 @@ public class AdvanceSharedLibraryLoader extends SharedLibraryLoader {
                     try {
                         if (OS.isAndroid) {
                             // System.loadLibrary(platformName)
-                            // Runtime.getRuntime().loadLibrary0(calledClass, platformName);
                             input[0] = calledClass; input[1] = platformName;
                             Reflect.invoke(Runtime.getRuntime(), "loadLibrary0", input, Class.class, String.class);
                         } else {
@@ -67,7 +66,6 @@ public class AdvanceSharedLibraryLoader extends SharedLibraryLoader {
                         file = new File(System.getProperty("java.library.path"), sourcePath);
                         if (file.exists()) {
                             // System.load(file.getAbsolutePath())
-                            // Runtime.getRuntime().load0(Reflection.getCallerClass(), filename);
                             input[0] = calledClass; input[1] = file.getAbsolutePath();
                             Reflect.invoke(Runtime.getRuntime(), "load0", input, Class.class, String.class);
                         } else {
@@ -76,6 +74,17 @@ public class AdvanceSharedLibraryLoader extends SharedLibraryLoader {
                     }
                 }
             }
+        }
+    }
+    @Override
+    protected Throwable loadFile(String sourcePath, String sourceCrc, File extractedFile) {
+        try {
+            // System.load(this.extractFile(sourcePath, sourceCrc, extractedFile).getAbsolutePath());
+            input[0] = calledClass; input[1] = this.extractFile(sourcePath, sourceCrc, extractedFile).getAbsolutePath();
+            Reflect.invoke(Runtime.getRuntime(), "load0", input, Class.class, String.class);
+            return null;
+        } catch (Throwable ex) {
+            return ex;
         }
     }
 }

@@ -280,9 +280,4 @@ public native boolean isBuffered ();/*
 public static native void setDebug(boolean enableDebug);/*
 	debug(enableDebug);
 */
-
-/** test */
-public static native void ping();/*
-
-*/
 }
