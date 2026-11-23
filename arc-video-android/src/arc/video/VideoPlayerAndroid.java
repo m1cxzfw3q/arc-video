@@ -194,7 +194,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 			@SuppressLint("DefaultLocale")
 			@Override
 			public boolean onError (MediaPlayer mp, int what, int extra) {
-				Log.err("arc-video", String.format("Error occurred: %d, %d\n", what, extra));
+				Log.err("[arc-video] " + String.format("Error occurred: %d, %d\n", what, extra));
 				return false;
 			}
 		});
@@ -217,7 +217,7 @@ public class VideoPlayerAndroid extends AbstractVideoPlayer implements VideoPlay
 			}
 			player.prepareAsync();
 		} catch (IOException e) {
-			Log.err("arc-video", "Error loading video file: " + file.path(), e);
+			Log.err("[arc-video] Error loading video file: " + file.path(), e);
 		}
 	}
 

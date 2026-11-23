@@ -118,7 +118,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 				return false;
 			}
 		} catch (Exception e) {
-			Log.err("arc-video", "Error loading video", e);
+			Log.err("[arc-video] Error loading video", e);
 			return false;
 		}
 
@@ -268,7 +268,7 @@ abstract public class CommonVideoPlayerDesktop extends AbstractVideoPlayer {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				Log.err("arc-video", "Error closing input stream", e);
+				Log.err("[arc-video] Error closing input stream", e);
 			}
 			inputStream = null;
 		}

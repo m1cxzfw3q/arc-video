@@ -307,7 +307,7 @@ public class OggInputStream extends InputStream {
 					if (result == 0) {
 						break; // need more data
 					} else if (result == -1) { // missing or corrupt data at this page position
-						Log.err("arc-audio", "Error reading OGG: Corrupt or missing data in bitstream.");
+						Log.err("[arc-audio] Error reading OGG: Corrupt or missing data in bitstream.");
 					} else {
 						streamState.pagein(page); // can safely ignore errors at this point
 						while (true) {

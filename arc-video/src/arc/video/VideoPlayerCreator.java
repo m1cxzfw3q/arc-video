@@ -56,12 +56,12 @@ public class VideoPlayerCreator {
 			if (Core.app.getVersion() >= 12) {
 				className = "arc.video.VideoPlayerAndroid";
 			} else {
-				Log.info("Arc-Video", "VideoPlayer can't be used on android < API level 12");
+				Log.info("[Arc-Video] VideoPlayer can't be used on android < API level 12");
 			}
 		}else if (type == ApplicationType.desktop) {
 			className = "arc.video.VideoPlayerDesktop";
 		} else {
-			Log.info("Arc-Video", "Platform is not supported by the Arc Video Extension");
+			Log.info("[Arc-Video] Platform is not supported by the Arc Video Extension");
 		}
 
 		try {

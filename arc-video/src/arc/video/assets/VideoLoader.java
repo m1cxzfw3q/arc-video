@@ -48,7 +48,7 @@ public class VideoLoader extends AsynchronousAssetLoader<VideoPlayer, VideoLoade
 		try {
 			videoPlayer.load(file);
 		} catch (FileNotFoundException ignored) {
-			Log.err("arc-video", "Video file " + fileName + " not found");
+			Log.err("[arc-video] Video file " + fileName + " not found");
 		}
 	}
 
