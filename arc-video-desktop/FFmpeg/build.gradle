@@ -129,7 +129,7 @@ void registerBuild(String buildName, String crossToolchain, String... extraArgs)
                 args "--extra-ldflags=-L$outDir/lib"
                 args "--prefix=$outDir"
                 // Uncomment the following line for MP4 video support:
-                //args '--enable-decoder=h264', '--enable-decoder=hevc'
+                args '--enable-decoder=h264', '--enable-decoder=hevc'
                 args extraArgs
             }
             execOperations.exec {
@@ -153,10 +153,10 @@ registerBuild 'Linux64', 'x86_64-linux-gnu', '--arch=x86_64', '--target-os=linux
 registerBuild 'LinuxARM32', 'arm-linux-gnueabihf', '--arch=arm', '--target-os=linux'
 registerBuild 'LinuxARM64', 'aarch64-linux-gnu', '--arch=aarch64', '--target-os=linux'
 
-registerBuild 'Macos64', null, '--enable-cross-compile',// '--enable-hwaccel=h264_videotoolbox', '--enable-hwaccel=hevc_videotoolbox',
+registerBuild 'Macos64', null, '--enable-cross-compile', '--enable-hwaccel=h264_videotoolbox', '--enable-hwaccel=hevc_videotoolbox',
         '--arch=x86_64', '--target-os=darwin', '--cc=clang', '--cxx=clang++', '--dep-cc=clang',
         '--extra-cflags=-mmacosx-version-min=10.11 -arch x86_64', '--extra-cxxflags=-mmacosx-version-min=10.11 -arch x86_64', '--extra-ldflags=-mmacosx-version-min=10.11 -arch x86_64'
-registerBuild 'MacosARM64', null, '--enable-cross-compile',// '--enable-hwaccel=h264_videotoolbox', '--enable-hwaccel=hevc_videotoolbox',
+registerBuild 'MacosARM64', null, '--enable-cross-compile', '--enable-hwaccel=h264_videotoolbox', '--enable-hwaccel=hevc_videotoolbox',
         '--arch=arm64', '--target-os=darwin', '--cc=clang', '--cxx=clang++', '--dep-cc=clang',
         '--extra-cflags=-mmacosx-version-min=10.11 -arch arm64', '--extra-cxxflags=-mmacosx-version-min=10.11 -arch arm64', '--extra-ldflags=-mmacosx-version-min=10.11 -arch arm64'
 
