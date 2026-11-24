@@ -28,8 +28,8 @@ dependencies {
 
     api "com.github.Anuken.Arc:backend-sdl3:$arcVersion"
 
-    api "com.badlogicgames.jlayer:jlayer:1.0.1-gdx"
-    api "org.jcraft:jorbis:0.0.17"
+    implementation "com.badlogicgames.jlayer:jlayer:1.0.1-gdx"
+    implementation "org.jcraft:jorbis:0.0.17"
     //noinspection NewerVersionAvailable
-    api "org.lwjgl:lwjgl-openal:3.4.2"
+    implementation "org.lwjgl:lwjgl-openal:3.4.2"
 }
