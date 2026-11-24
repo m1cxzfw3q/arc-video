@@ -19,13 +19,6 @@ package arc.video;
 import java.nio.ByteBuffer;
 
 import arc.audio.Music;
-import arc.util.Log;
-import net.sourceforge.lame.lowlevel.LameEncoder;
-
-import javax.sound.sampled.AudioFormat;
-
-import static net.sourceforge.lame.lowlevel.LameEncoder.*;
-import static net.sourceforge.lame.mp3.MPEGMode.JOINT_STEREO;
 
 /** The RawMusic class extends OpenAlMusic, and retrieves it's audio from a VideoDecoder instance.
  *
@@ -38,20 +31,26 @@ class RawMusic extends Music {
 		this.decoder = decoder;
 		backBuffer = buffer;
 		backBuffer.position(backBuffer.limit());
-
-		LameEncoder encoder = new LameEncoder(
-				new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sampleRate, 16, channels, 2, sampleRate, false),
-				BITRATE_AUTO, JOINT_STEREO, DEFAULT_QUALITY, DEFAULT_VBR
-		);
-
-		byte[] encoded = new byte[backBuffer.limit()], tmpBytes = new byte[backBuffer.limit() - backBuffer.position()];
-		backBuffer.get(tmpBytes);
-		encoder.encodeBuffer(tmpBytes, backBuffer.position(), tmpBytes.length, encoded);
-
-        try {
-            load(encoded);
-        } catch (Exception e) {
-			Log.err("Failed loading music from byte buffer", e);
-        }
+		// TODO implementation
     }
+
+	public int read (byte[] buffer) {
+		int sizeNeeded = buffer.length;
+		int currentIndex = 0;
+
+		while (sizeNeeded > 0) {
+			if (backBuffer.remaining() > 0) {
+				int numBytes = Math.min(backBuffer.remaining(), sizeNeeded);
+				backBuffer.get(buffer, currentIndex, numBytes);
+				currentIndex += numBytes;
+				sizeNeeded -= numBytes;
+			} else {
+				// We need to fill the buffer;
+				backBuffer.rewind();
+				decoder.updateAudioBuffer();
+			}
+		}
+
+		return buffer.length;
+	}
 }
