@@ -33,7 +33,6 @@ import static net.sourceforge.lame.mp3.MPEGMode.JOINT_STEREO;
 class RawMusic extends Music {
 	VideoDecoder decoder;
 	ByteBuffer backBuffer;
-	private byte[] tmpBytes;
 
     public RawMusic (VideoDecoder decoder, ByteBuffer buffer, int channels, int sampleRate) {
 		this.decoder = decoder;
