@@ -45,7 +45,7 @@ class RawMusic extends Music {
 				BITRATE_AUTO, JOINT_STEREO, DEFAULT_QUALITY, DEFAULT_VBR
 		);
 
-		byte[] encoded = new byte[backBuffer.limit()], tmpBytes = new byte[backBuffer.limit()];
+		byte[] encoded = new byte[backBuffer.limit()], tmpBytes = new byte[backBuffer.limit()-1];
 		backBuffer.get(tmpBytes);
 		encoder.encodeBuffer(tmpBytes, 0, backBuffer.limit(), encoded);
 
