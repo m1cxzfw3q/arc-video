@@ -46,7 +46,7 @@ class RawMusic extends Music {
 
 		byte[] encoded = new byte[backBuffer.limit()], tmpBytes = new byte[backBuffer.limit() - backBuffer.position()];
 		backBuffer.get(tmpBytes);
-		encoder.encodeBuffer(tmpBytes, backBuffer.position(), backBuffer.limit(), encoded);
+		encoder.encodeBuffer(tmpBytes, backBuffer.position(), tmpBytes.length, encoded);
 
         try {
             load(encoded);
